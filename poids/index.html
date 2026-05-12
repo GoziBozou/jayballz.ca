@@ -522,18 +522,39 @@
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPpRiWdVLhOAKUpFb5XJyobAweQi2dGCaIFC65smvS3LrfXEbO0t7cFhNazctwkib-8g/exec';
+    let userPassword = '';
 
     // --- Login ---
-    function login() {
+    async function login() {
       const password = document.getElementById('loginPassword').value;
       const msg = document.getElementById('loginMessage');
 
-      if (password === 'Technoqc2025!') {
-        document.getElementById('loginCard').classList.add('hidden');
-        document.getElementById('formCard').classList.remove('hidden');
-        msg.style.display = 'none';
-      } else {
-        msg.textContent = 'Mot de passe incorrect.';
+      if (!password) {
+        msg.textContent = 'Veuillez entrer le mot de passe.';
+        msg.className = 'message error';
+        return;
+      }
+
+      // Verify password server-side by making a test request
+      try {
+        const url = new URL(SCRIPT_URL);
+        url.searchParams.set('action', 'results');
+        url.searchParams.set('password', password);
+        const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+        const text = await response.text();
+        const result = JSON.parse(text);
+
+        if (result.success) {
+          userPassword = password;
+          document.getElementById('loginCard').classList.add('hidden');
+          document.getElementById('formCard').classList.remove('hidden');
+          msg.style.display = 'none';
+        } else {
+          msg.textContent = 'Mot de passe incorrect.';
+          msg.className = 'message error';
+        }
+      } catch (e) {
+        msg.textContent = 'Erreur de connexion. Réessayez.';
         msg.className = 'message error';
       }
     }
@@ -598,6 +619,7 @@
         url.searchParams.set('nom', nom);
         url.searchParams.set('poids', parseFloat(poids));
         url.searchParams.set('date', dateStr);
+        url.searchParams.set('password', userPassword);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
 
         const text = await response.text();
@@ -635,6 +657,7 @@
       try {
         const url = new URL(SCRIPT_URL);
         url.searchParams.set('action', 'results');
+        url.searchParams.set('password', userPassword);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
         const text = await response.text();
         let data;
@@ -747,6 +770,7 @@
         const url = new URL(SCRIPT_URL);
         url.searchParams.set('action', 'history');
         url.searchParams.set('nom', nom);
+        url.searchParams.set('password', userPassword);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
         const text = await response.text();
         let data;
