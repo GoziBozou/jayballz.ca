@@ -1,0 +1,39 @@
+name: Mise à jour hebdomadaire des spéciaux d'épicerie
+
+on:
+  schedule:
+    - cron: '0 12 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le repo
+        uses: actions/checkout@v4
+
+      - name: Installer Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rouler le scraper
+        run: |
+          python3 food/scripts/update_food.py
+
+      - name: Commit et push si changements
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add food/index.html
+          if git diff --staged --quiet; then
+            echo "✅ Aucun changement détecté."
+          else
+            git commit -m "🛒 Mise à jour hebdomadaire des spéciaux ($(date -u +%Y-%m-%d))"
+            git push
+            echo "✅ Page mise à jour et publiée."
+          fi
