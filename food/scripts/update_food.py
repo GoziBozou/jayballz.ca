@@ -644,13 +644,72 @@ def format_savings_class(pct):
     return ""
 
 
-def get_week_dates():
-    """Retourne (date_jeudi, date_mercredi_suivant) pour la semaine en cours
-    où on est jeudi ou plus tard, sinon la semaine précédente."""
+def extract_week_dates_from_html(html_content):
+    """
+    Extrait les dates de validité depuis le HTML de circulaires.club.
+    Cherche un pattern comme "du 14 au 20 mai 2026" ou "14 au 20 mai".
+    Retourne (date_debut, date_fin) ou None si non trouvé.
+    """
+    if not html_content:
+        return None
+    
+    # Pattern pour "du X au Y mois année" ou "X au Y mois"
+    # Ex: "du 14 au 20 mai 2026", "14 au 20 mai", etc.
+    months_fr = {
+        "janvier": 1, "février": 2, "mars": 3, "avril": 4,
+        "mai": 5, "juin": 6, "juillet": 7, "août": 8,
+        "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12
+    }
+    
+    pattern = r'(?:du\s+)?(\d{1,2})\s+au\s+(\d{1,2})\s+(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)(?:\s+(\d{4}))?'
+    m = re.search(pattern, html_content, re.IGNORECASE)
+    
+    if m:
+        day_start = int(m.group(1))
+        day_end = int(m.group(2))
+        month_name = m.group(3).lower()
+        year = int(m.group(4)) if m.group(4) else datetime.now().year
+        
+        month = months_fr.get(month_name)
+        if month:
+            try:
+                date_start = datetime(year, month, day_start)
+                date_end = datetime(year, month, day_end)
+                return date_start, date_end
+            except ValueError:
+                pass
+    
+    return None
+
+
+def get_week_dates(html_content=None):
+    """
+    Retourne (date_jeudi, date_mercredi_suivant) pour la semaine des circulaires.
+    
+    Stratégie:
+    1. Si html_content fourni, essaie d'extraire les dates depuis circulaires.club
+    2. Sinon, calcule basé sur le jeudi le plus proche
+    """
+    # Essayer d'extraire depuis le HTML
+    if html_content:
+        dates = extract_week_dates_from_html(html_content)
+        if dates:
+            return dates
+    
+    # Fallback: calculer basé sur aujourd'hui
     today = datetime.now(timezone(timedelta(hours=-4)))  # heure du Québec
-    # Trouver le jeudi le plus récent (0=lundi, 3=jeudi)
-    days_since_thursday = (today.weekday() - 3) % 7
-    thursday = today - timedelta(days=days_since_thursday)
+    
+    # Si on est lundi/mardi/mercredi, prendre le jeudi qui vient (semaine suivante)
+    # Si on est jeudi ou après, prendre le jeudi de cette semaine
+    weekday = today.weekday()  # 0=lundi, 3=jeudi
+    
+    if weekday < 3:  # lundi, mardi, mercredi
+        days_until_thursday = 3 - weekday
+        thursday = today + timedelta(days=days_until_thursday)
+    else:  # jeudi ou après
+        days_since_thursday = weekday - 3
+        thursday = today - timedelta(days=days_since_thursday)
+    
     wednesday = thursday + timedelta(days=6)
     return thursday, wednesday
 
@@ -661,9 +720,9 @@ def format_date_fr(d):
     return f"{d.day} {months[d.month - 1]} {d.year}"
 
 
-def generate_html(data_by_banner):
+def generate_html(data_by_banner, source_html=None):
     """Génère le HTML complet à partir des données scrapées."""
-    thursday, wednesday = get_week_dates()
+    thursday, wednesday = get_week_dates(source_html)
     date_range = f"du jeudi {thursday.day} au mercredi {format_date_fr(wednesday)}"
     update_time = datetime.now(timezone(timedelta(hours=-4))).strftime("%Y-%m-%d %H:%M")
 
@@ -836,7 +895,7 @@ def main():
 
     # 4. Générer le HTML
     print(f"✨ Génération de {OUTPUT_PATH}")
-    html_out = generate_html(data)
+    html_out = generate_html(data, cc_html)
     OUTPUT_PATH.write_text(html_out, encoding="utf-8")
 
     total = sum(len(items) for items in data.values())
