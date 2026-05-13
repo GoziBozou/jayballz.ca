@@ -3,29 +3,1164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recettes santé — Initialisation</title>
+<title>Recettes santé avec les rabais — jayballz.ca</title>
+<meta name="description" content="10 recettes santé équilibrées basées sur les spéciaux d'épicerie de la semaine au Québec">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: -apple-system, system-ui, sans-serif;
-    background: #faf3e0;
-    color: #1a1a1a;
-    padding: 80px 20px;
-    text-align: center;
-    line-height: 1.6;
+:root {
+  --cream: #f4ead5;
+  --paper: #faf3e0;
+  --ink: #1a1a1a;
+  --tomato: #c8312c;
+  --moutarde: #d99a1c;
+  --sapin: #2d5a3d;
+  --sapin-dark: #1c3b28;
+  --rouge-prix: #e63946;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(217, 154, 28, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(200, 49, 44, 0.06) 0%, transparent 40%);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 40px 20px;
+  line-height: 1.5;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, transparent 1px, transparent 2px, rgba(0,0,0,0.012) 3px);
+  pointer-events: none;
+  z-index: 1;
+}
+.container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+header {
+  border-top: 4px double var(--ink);
+  border-bottom: 4px double var(--ink);
+  padding: 32px 0;
+  margin-bottom: 48px;
+  text-align: center;
+}
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--tomato);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.intro {
+  max-width: 640px;
+  margin: 24px auto 0;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  line-height: 1.7;
+}
+.intro a {
+  color: var(--tomato);
+  text-decoration: none;
+  border-bottom: 2px solid var(--moutarde);
+}
+.intro a:hover { border-bottom-color: var(--tomato); }
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+.recipe-card {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 8px 0 var(--ink);
+}
+.recipe-image {
+  height: 200px;
+  background: linear-gradient(135deg, var(--sapin) 0%, var(--moutarde) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  border-bottom: 2px solid var(--ink);
+}
+.recipe-card[data-category="poulet"] .recipe-image {
+  background: linear-gradient(135deg, #d4a574 0%, #f4d03f 100%);
+}
+.recipe-card[data-category="poisson"] .recipe-image,
+.recipe-card[data-category="fruits_de_mer"] .recipe-image {
+  background: linear-gradient(135deg, #5dade2 0%, #21618c 100%);
+}
+.recipe-card[data-category="porc"] .recipe-image {
+  background: linear-gradient(135deg, #ec7063 0%, #943126 100%);
+}
+.recipe-card[data-category="boeuf"] .recipe-image {
+  background: linear-gradient(135deg, #a04000 0%, #641e16 100%);
+}
+.recipe-card[data-category="vegetarien"] .recipe-image {
+  background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+}
+.recipe-content {
+  padding: 20px;
+}
+.recipe-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.recipe-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--ink);
+  color: var(--moutarde);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.badge.rabais {
+  background: var(--tomato);
+  color: #fff;
+}
+.recipe-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #666;
+  margin-top: 12px;
+  display: flex;
+  gap: 16px;
+}
+.nutrition {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0,0,0,0.2);
+}
+.nutrition-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+.nutrition-item strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  color: var(--sapin-dark);
+  font-weight: 800;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.modal.active { display: flex; }
+.modal-content {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 2px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  border-radius: 2px;
+  z-index: 10;
+}
+.modal-close:hover {
+  background: var(--tomato);
+}
+.modal-image {
+  height: 250px;
+  background: linear-gradient(135deg, var(--sapin) 0%, var(--moutarde) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  border-bottom: 3px solid var(--ink);
+}
+.modal-body {
+  padding: 32px;
+}
+.modal-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.modal-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--cream);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #666;
+}
+.modal-meta strong {
+  color: var(--ink);
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 24px 0 12px;
+  color: var(--sapin-dark);
+}
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+}
+.ingredients-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+}
+.ingredients-list li:last-child {
+  border-bottom: none;
+}
+.ingredients-list .rabais-star {
+  color: var(--tomato);
+  margin-right: 6px;
+  font-weight: 700;
+}
+.steps-list {
+  list-style: none;
+  counter-reset: step-counter;
+  padding: 0;
+}
+.steps-list li {
+  counter-increment: step-counter;
+  padding: 16px 0 16px 48px;
+  position: relative;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+.steps-list li:last-child {
+  border-bottom: none;
+}
+.steps-list li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  background: var(--ink);
+  color: var(--moutarde);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.modal-nutrition {
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--cream);
+  border-radius: 2px;
+  border: 2px solid var(--ink);
+}
+.modal-nutrition-item {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+}
+.modal-nutrition-item strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  color: var(--sapin-dark);
+  font-weight: 800;
+  margin-bottom: 4px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 2px solid var(--ink);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #555;
+}
+footer a {
+  color: var(--tomato);
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  body { padding: 24px 12px; }
+  .recipes-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
-  h1 { font-size: 2rem; margin-bottom: 16px; }
-  p { max-width: 500px; margin: 0 auto 16px; color: #555; }
-  code {
-    background: #f4ead5;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace;
-  }
+  .modal-body { padding: 24px; }
+  .modal-title { font-size: 1.5rem; }
+  .modal-image { height: 180px; font-size: 3.5rem; }
+}
 </style>
 </head>
 <body>
-  <h1>🥗 Recettes santé</h1>
-  <p>Cette page sera générée automatiquement chaque jeudi à 8h AM (après la mise à jour des spéciaux).</p>
-  <p>Si vous voyez ce message après le déploiement, lancez le workflow manuellement depuis l'onglet <code>Actions</code> de GitHub.</p>
+<div class="container">
+  <header>
+    <div class="kicker">★ Recettes santé ★ Basées sur les rabais ★</div>
+    <h1>10 recettes avec les spéciaux de la semaine</h1>
+    <p class="intro">
+      Des recettes équilibrées (protéine + légumes + glucides) qui utilisent les ingrédients en rabais cette semaine. 
+      Consultez les <a href="/food">spéciaux d'épicerie</a> pour voir tous les rabais.
+    </p>
+  </header>
+
+  <div class="recipes-grid">
+
+    <div class="recipe-card" data-category="vegetarien" data-recipe-id="25" data-matched='[&quot;Œufs&quot;, &quot;Poivron&quot;, &quot;Champignons&quot;, &quot;Tomates&quot;]'>
+      <div class="recipe-image">🥗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Omelette aux légumes et fromage</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 4 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 25 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>380</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>24g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="poulet" data-recipe-id="12" data-matched='[&quot;Champignons&quot;, &quot;Poivron&quot;, &quot;Oignon&quot;]'>
+      <div class="recipe-image">🍗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Poulet cacciatore (chasseur)</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 3 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 60 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>465</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>38g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="boeuf" data-recipe-id="3" data-matched='[&quot;Poivron&quot;, &quot;Tomate&quot;, &quot;Oignon&quot;]'>
+      <div class="recipe-image">🥩</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Bœuf haché à la mexicaine (burrito bowl)</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 3 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 60 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>520</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>36g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="poulet" data-recipe-id="4" data-matched='[&quot;Poitrines de poulet&quot;, &quot;Oignon&quot;]'>
+      <div class="recipe-image">🍗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Poulet au beurre version santé</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 70 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>445</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>42g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="vegetarien" data-recipe-id="13" data-matched='[&quot;Oignon&quot;, &quot;Œuf&quot;]'>
+      <div class="recipe-image">🥗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Boulettes de lentilles et quinoa</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 45 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>340</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>18g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="vegetarien" data-recipe-id="9" data-matched='[&quot;Oignon&quot;, &quot;Poivron&quot;]'>
+      <div class="recipe-image">🥗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Chili végétarien aux haricots noirs</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">6 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 45 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>320</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>16g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="poulet" data-recipe-id="19" data-matched='[&quot;Poitrines de poulet&quot;, &quot;Œuf&quot;]'>
+      <div class="recipe-image">🍗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Poulet parmigiana léger</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 45 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>520</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>48g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="vegetarien" data-recipe-id="20" data-matched='[&quot;Concombre&quot;, &quot;Tomates&quot;]'>
+      <div class="recipe-image">🥗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Salade de quinoa méditerranéenne</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 35 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>390</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>14g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="boeuf" data-recipe-id="22" data-matched='[&quot;Champignons&quot;, &quot;Oignon&quot;]'>
+      <div class="recipe-image">🥩</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Bœuf stroganoff santé</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 40 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>485</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>38g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="poulet" data-recipe-id="23" data-matched='[&quot;Poitrines de poulet&quot;, &quot;Oignon&quot;]'>
+      <div class="recipe-image">🍗</div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">Poulet tikka masala</h3>
+        <div class="recipe-badges">
+          <span class="badge rabais">⭐ 2 en rabais</span><span class="badge">4 portions</span>
+        </div>
+        <div class="recipe-meta">
+          <span>⏱️ 70 min</span>
+        </div>
+        <div class="nutrition">
+          <div class="nutrition-item">
+            <strong>465</strong>
+            calories
+          </div>
+          <div class="nutrition-item">
+            <strong>42g</strong>
+            protéines
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modal-25">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(25)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--sapin) 0%, var(--sapin-dark) 100%);">
+        🥗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Omelette aux légumes et fromage</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 10 min</span>
+          <span><strong>Cuisson:</strong> 15 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li><span class="rabais-star">⭐</span>Œufs <em>(8 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Poivron <em>(1 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Champignons <em>(200 g)</em></li>
+<li>Épinards <em>(200 g)</em></li>
+<li>Fromage cheddar <em>(150 g)</em></li>
+<li>Oignon vert <em>(4 tiges)</em></li>
+<li>Pain de blé entier <em>(8 tranches)</em></li>
+<li><span class="rabais-star">⭐</span>Tomates <em>(2 un.)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Faire revenir les poivrons et champignons tranchés</li>
+<li>Ajouter les épinards et cuire jusqu'à ce qu'ils fanent</li>
+<li>Battre les œufs avec un peu de lait</li>
+<li>Verser les œufs dans la poêle avec les légumes</li>
+<li>Parsemer de fromage râpé et oignon vert haché</li>
+<li>Cuire à feu doux jusqu'à ce que l'omelette soit prise</li>
+<li>Servir avec du pain grillé et des tomates fraîches</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>380</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>24g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-12">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(12)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🍗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Poulet cacciatore (chasseur)</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 20 min</span>
+          <span><strong>Cuisson:</strong> 40 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Hauts de cuisse de poulet <em>(600 g)</em></li>
+<li>Tomates en dés <em>(800 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Champignons <em>(300 g)</em></li>
+<li><span class="rabais-star">⭐</span>Poivron <em>(2 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Ail <em>(4 gousses)</em></li>
+<li>Origan séché <em>(10 ml)</em></li>
+<li>Pâtes penne <em>(350 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Faire dorer le poulet dans une grande poêle, réserver</li>
+<li>Faire revenir l'oignon, l'ail, les poivrons et les champignons</li>
+<li>Ajouter les tomates en dés et l'origan</li>
+<li>Remettre le poulet dans la sauce</li>
+<li>Laisser mijoter 30 minutes à couvert</li>
+<li>Cuire les pâtes selon les instructions</li>
+<li>Servir le poulet et la sauce sur les pâtes</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>465</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>38g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-3">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(3)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🥩
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Bœuf haché à la mexicaine (burrito bowl)</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 15 min</span>
+          <span><strong>Cuisson:</strong> 45 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Bœuf haché maigre <em>(500 g)</em></li>
+<li>Riz brun <em>(300 g)</em></li>
+<li>Haricots noirs en conserve <em>(400 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Poivron <em>(2 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Tomate <em>(3 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Épices mexicaines <em>(30 ml)</em></li>
+<li>Yogourt grec <em>(200 ml)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Cuire le riz brun selon les instructions (environ 40 minutes)</li>
+<li>Faire revenir l'oignon haché et le poivron coupé en dés</li>
+<li>Ajouter le bœuf haché et cuire jusqu'à ce qu'il soit doré</li>
+<li>Incorporer les épices mexicaines et les haricots noirs égouttés</li>
+<li>Couper les tomates en dés</li>
+<li>Assembler les bols: riz, bœuf, tomates fraîches</li>
+<li>Garnir de yogourt grec en guise de crème sure</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>520</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>36g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-4">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(4)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🍗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Poulet au beurre version santé</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 40 min</span>
+          <span><strong>Cuisson:</strong> 30 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li><span class="rabais-star">⭐</span>Poitrines de poulet <em>(600 g)</em></li>
+<li>Yogourt grec <em>(250 ml)</em></li>
+<li>Tomates en dés <em>(400 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Ail <em>(4 gousses)</em></li>
+<li>Gingembre frais <em>(30 g)</em></li>
+<li>Garam masala <em>(15 ml)</em></li>
+<li>Riz basmati <em>(300 g)</em></li>
+<li>Épinards <em>(200 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Couper le poulet en cubes et mariner dans la moitié du yogourt 30 minutes</li>
+<li>Faire revenir l'oignon, l'ail et le gingembre hachés</li>
+<li>Ajouter le poulet et cuire 5 minutes</li>
+<li>Incorporer les tomates en dés et le garam masala</li>
+<li>Laisser mijoter 15 minutes à feu doux</li>
+<li>Ajouter le reste du yogourt et les épinards, mélanger</li>
+<li>Cuire le riz et servir avec le poulet</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>445</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>42g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-13">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(13)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--sapin) 0%, var(--sapin-dark) 100%);">
+        🥗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Boulettes de lentilles et quinoa</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 20 min</span>
+          <span><strong>Cuisson:</strong> 25 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Lentilles cuites <em>(400 g)</em></li>
+<li>Quinoa cuit <em>(200 g)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Ail <em>(3 gousses)</em></li>
+<li><span class="rabais-star">⭐</span>Œuf <em>(1 un.)</em></li>
+<li>Chapelure <em>(125 ml)</em></li>
+<li>Sauce tomate <em>(500 ml)</em></li>
+<li>Salade verte <em>(300 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Écraser grossièrement les lentilles à la fourchette</li>
+<li>Mélanger avec le quinoa, l'oignon haché, l'ail, l'œuf et la chapelure</li>
+<li>Former 12 boulettes avec le mélange</li>
+<li>Cuire au four à 375°F pendant 25 minutes en retournant à mi-cuisson</li>
+<li>Réchauffer la sauce tomate</li>
+<li>Préparer une salade verte simple</li>
+<li>Servir les boulettes avec la sauce et la salade</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>340</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>18g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-9">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(9)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--sapin) 0%, var(--sapin-dark) 100%);">
+        🥗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Chili végétarien aux haricots noirs</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 15 min</span>
+          <span><strong>Cuisson:</strong> 30 min</span>
+          <span><strong>Portions:</strong> 6</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Haricots noirs en conserve <em>(800 ml)</em></li>
+<li>Haricots rouges en conserve <em>(400 ml)</em></li>
+<li>Tomates en dés <em>(800 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(2 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Poivron <em>(2 un.)</em></li>
+<li>Maïs en grains <em>(300 ml)</em></li>
+<li>Épices chili <em>(30 ml)</em></li>
+<li>Yogourt grec <em>(200 ml)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Faire revenir l'oignon et le poivron coupés en dés</li>
+<li>Ajouter les tomates en dés et les épices chili</li>
+<li>Incorporer les haricots égouttés et le maïs</li>
+<li>Laisser mijoter 25-30 minutes à feu doux</li>
+<li>Ajuster l'assaisonnement au besoin</li>
+<li>Servir dans des bols avec une cuillère de yogourt grec</li>
+<li>Accompagner de pain croûté ou tortillas</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>320</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>16g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-19">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(19)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🍗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Poulet parmigiana léger</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 20 min</span>
+          <span><strong>Cuisson:</strong> 25 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li><span class="rabais-star">⭐</span>Poitrines de poulet <em>(600 g)</em></li>
+<li>Chapelure panko <em>(125 ml)</em></li>
+<li>Parmesan râpé <em>(60 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Œuf <em>(2 un.)</em></li>
+<li>Sauce tomate <em>(500 ml)</em></li>
+<li>Mozzarella <em>(150 g)</em></li>
+<li>Pâtes spaghetti <em>(350 g)</em></li>
+<li>Basilic frais <em>(20 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Aplatir légèrement les poitrines de poulet</li>
+<li>Tremper dans l'œuf battu puis dans le mélange chapelure-parmesan</li>
+<li>Cuire au four à 400°F pendant 15 minutes</li>
+<li>Napper de sauce tomate et garnir de mozzarella</li>
+<li>Remettre au four 10 minutes pour gratiner</li>
+<li>Cuire les pâtes selon les instructions</li>
+<li>Servir le poulet sur les pâtes avec du basilic frais</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>520</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>48g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-20">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(20)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--sapin) 0%, var(--sapin-dark) 100%);">
+        🥗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Salade de quinoa méditerranéenne</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 20 min</span>
+          <span><strong>Cuisson:</strong> 15 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Quinoa <em>(300 g)</em></li>
+<li><span class="rabais-star">⭐</span>Concombre <em>(1 un.)</em></li>
+<li><span class="rabais-star">⭐</span>Tomates <em>(3 un.)</em></li>
+<li>Poivron rouge <em>(1 un.)</em></li>
+<li>Oignon rouge <em>(1 un.)</em></li>
+<li>Fromage feta <em>(200 g)</em></li>
+<li>Olives Kalamata <em>(100 g)</em></li>
+<li>Citron <em>(2 un.)</em></li>
+<li>Huile d'olive <em>(60 ml)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Cuire le quinoa selon les instructions et laisser refroidir</li>
+<li>Couper tous les légumes en petits dés</li>
+<li>Préparer la vinaigrette: jus de citron et huile d'olive</li>
+<li>Mélanger le quinoa avec les légumes</li>
+<li>Ajouter le feta émietté et les olives tranchées</li>
+<li>Verser la vinaigrette et bien mélanger</li>
+<li>Réfrigérer au moins 30 minutes avant de servir</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>390</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>14g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-22">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(22)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🥩
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Bœuf stroganoff santé</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 15 min</span>
+          <span><strong>Cuisson:</strong> 25 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li>Bifteck de bœuf <em>(500 g)</em></li>
+<li><span class="rabais-star">⭐</span>Champignons <em>(400 g)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Yogourt grec <em>(250 ml)</em></li>
+<li>Moutarde de Dijon <em>(30 ml)</em></li>
+<li>Bouillon de bœuf <em>(250 ml)</em></li>
+<li>Pâtes aux œufs <em>(350 g)</em></li>
+<li>Persil frais <em>(30 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Trancher le bœuf en lanières fines</li>
+<li>Faire revenir le bœuf à feu vif, réserver</li>
+<li>Faire sauter l'oignon et les champignons tranchés</li>
+<li>Ajouter le bouillon et la moutarde, laisser mijoter 10 minutes</li>
+<li>Retirer du feu et incorporer le yogourt grec</li>
+<li>Remettre le bœuf et réchauffer doucement</li>
+<li>Servir sur les pâtes cuites avec du persil</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>485</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>38g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-23">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(23)">&times;</button>
+      <div class="modal-image" style="background: linear-gradient(135deg, var(--moutarde) 0%, var(--tomato) 100%);">
+        🍗
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Poulet tikka masala</h2>
+        <div class="modal-meta">
+          <span><strong>Préparation:</strong> 40 min</span>
+          <span><strong>Cuisson:</strong> 30 min</span>
+          <span><strong>Portions:</strong> 4</span>
+        </div>
+        
+        <h3 class="section-title">Ingrédients</h3>
+        <ul class="ingredients-list">
+<li><span class="rabais-star">⭐</span>Poitrines de poulet <em>(600 g)</em></li>
+<li>Yogourt grec <em>(200 ml)</em></li>
+<li>Pâte tikka masala <em>(60 ml)</em></li>
+<li>Tomates en dés <em>(400 ml)</em></li>
+<li>Lait de coco léger <em>(250 ml)</em></li>
+<li><span class="rabais-star">⭐</span>Oignon <em>(1 un.)</em></li>
+<li>Riz basmati <em>(300 g)</em></li>
+<li>Coriandre fraîche <em>(30 g)</em></li>
+        </ul>
+        
+        <h3 class="section-title">Préparation</h3>
+        <ol class="steps-list">
+<li>Mélanger le poulet avec le yogourt et la moitié de la pâte tikka, mariner 30 min</li>
+<li>Faire revenir l'oignon haché</li>
+<li>Ajouter le reste de la pâte tikka et cuire 1 minute</li>
+<li>Incorporer les tomates et le lait de coco</li>
+<li>Ajouter le poulet et laisser mijoter 20 minutes</li>
+<li>Cuire le riz basmati</li>
+<li>Servir le poulet sur le riz avec de la coriandre</li>
+        </ol>
+        
+        <div class="modal-nutrition">
+          <div class="modal-nutrition-item">
+            <strong>465</strong>
+            Calories/portion
+          </div>
+          <div class="modal-nutrition-item">
+            <strong>42g</strong>
+            Protéines/portion
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Mis à jour automatiquement chaque jeudi · 
+    Dernière mise à jour : 2026-05-13 15:59 · 
+    <a href="/food">Voir les spéciaux</a>
+  </footer>
+</div>
+
+<script>
+function openModal(recipeId) {
+  const modal = document.getElementById('modal-' + recipeId);
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeModal(recipeId) {
+  const modal = document.getElementById('modal-' + recipeId);
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Click sur une carte pour ouvrir le modal
+document.querySelectorAll('.recipe-card').forEach(card => {
+  card.addEventListener('click', function() {
+    const recipeId = this.dataset.recipeId;
+    openModal(recipeId);
+  });
+});
+
+// Click en dehors du modal pour fermer
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', function(e) {
+    if (e.target === this) {
+      const recipeId = this.id.replace('modal-', '');
+      closeModal(recipeId);
+    }
+  });
+});
+
+// ESC pour fermer
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal.active').forEach(modal => {
+      const recipeId = modal.id.replace('modal-', '');
+      closeModal(recipeId);
+    });
+  }
+});
+</script>
 </body>
 </html>
