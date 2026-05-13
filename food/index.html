@@ -3,29 +3,844 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spéciaux d'épicerie — Initialisation</title>
+<title>Spéciaux d'épicerie — du jeudi 7 au mercredi 13 mai 2026</title>
+<meta name="description" content="Les meilleurs spéciaux hebdomadaires de Super C, Maxi, Metro et IGA au Québec, mis à jour chaque jeudi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: -apple-system, system-ui, sans-serif;
-    background: #faf3e0;
-    color: #1a1a1a;
-    padding: 80px 20px;
-    text-align: center;
-    line-height: 1.6;
-  }
-  h1 { font-size: 2rem; margin-bottom: 16px; }
-  p { max-width: 500px; margin: 0 auto 16px; color: #555; }
-  code {
-    background: #f4ead5;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace;
-  }
+:root {
+  --cream: #f4ead5;
+  --paper: #faf3e0;
+  --ink: #1a1a1a;
+  --tomato: #c8312c;
+  --tomato-dark: #962020;
+  --moutarde: #d99a1c;
+  --sapin: #2d5a3d;
+  --sapin-dark: #1c3b28;
+  --ardoise: #2b2926;
+  --rouge-prix: #e63946;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(217, 154, 28, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(200, 49, 44, 0.06) 0%, transparent 40%);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 40px 20px;
+  line-height: 1.5;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, transparent 1px, transparent 2px, rgba(0,0,0,0.012) 3px);
+  pointer-events: none;
+  z-index: 1;
+}
+.container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+header {
+  border-top: 4px double var(--ink);
+  border-bottom: 4px double var(--ink);
+  padding: 32px 0;
+  margin-bottom: 48px;
+  text-align: center;
+}
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--tomato);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+h1 .amp { color: var(--tomato); font-style: italic; font-weight: 400; }
+.dates {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--sapin-dark);
+  margin-top: 8px;
+}
+.intro {
+  max-width: 640px;
+  margin: 24px auto 0;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  line-height: 1.7;
+}
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--sapin-dark);
+}
+.stat strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  color: var(--tomato);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 2px;
+}
+.store-section {
+  margin-bottom: 64px;
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: 6px 6px 0 var(--ink);
+  overflow: hidden;
+}
+.store-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 24px 32px;
+  background: var(--ink);
+  color: var(--paper);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.store-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
+}
+.store-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--moutarde);
+}
+.store-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(250, 243, 224, 0.7);
+  margin-top: 4px;
+}
+.super-c .store-header { background: var(--tomato); }
+.super-c .store-header .store-tagline { color: #ffd966; }
+.maxi .store-header { background: var(--moutarde); color: var(--ink); }
+.maxi .store-header .store-tagline { color: var(--tomato-dark); }
+.maxi .store-header .store-count { color: rgba(26, 26, 26, 0.6); }
+.metro .store-header { background: var(--sapin); }
+.metro .store-header .store-tagline { color: #f5d77a; }
+.iga .store-header { background: var(--tomato-dark); }
+.iga .store-header .store-tagline { color: var(--moutarde); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: var(--cream); }
+thead { background: var(--paper); border-bottom: 3px solid var(--ink); }
+th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-align: left;
+  padding: 16px 20px;
+  color: var(--ardoise);
+  font-weight: 700;
+}
+th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td {
+  padding: 16px 20px;
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(255, 255, 255, 0.4); }
+.item-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.3;
+}
+.item-note {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.76rem;
+  color: #6b6b6b;
+  margin-top: 2px;
+  font-style: italic;
+}
+.category {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(0,0,0,0.08);
+  color: var(--ardoise);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.price-reg {
+  font-family: 'JetBrains Mono', monospace;
+  color: #888;
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  font-size: 0.88rem;
+}
+.price-reg.estim::after {
+  content: '*';
+  color: var(--tomato);
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 2px;
+}
+.price-sale {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--rouge-prix);
+  font-style: italic;
+}
+.savings {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--ink);
+  color: var(--moutarde);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 2px;
+  min-width: 54px;
+  text-align: center;
+}
+.savings.high { background: var(--tomato); color: #fff; }
+.savings.medium { background: var(--sapin); color: var(--moutarde); }
+.scene-mark {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--tomato);
+  margin-left: 6px;
+  font-weight: 700;
+}
+.disclaimer {
+  background: var(--cream);
+  border-left: 4px solid var(--tomato);
+  padding: 16px 20px;
+  margin: 32px 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #333;
+}
+.disclaimer strong { color: var(--tomato-dark); }
+footer {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 2px solid var(--ink);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #555;
+}
+footer a { color: var(--tomato); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.update-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  background: var(--sapin);
+  color: var(--moutarde);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+@media (max-width: 640px) {
+  body { padding: 24px 12px; }
+  .store-header { padding: 18px 20px; }
+  .store-name { font-size: 1.75rem; }
+  th, td { padding: 12px 10px; font-size: 0.82rem; }
+  .item-name { font-size: 0.92rem; }
+  .price-sale { font-size: 1.05rem; }
+  .savings { font-size: 0.68rem; padding: 3px 6px; min-width: 46px; }
+  .category { font-size: 8px; padding: 1px 5px; }
+}
+@media print {
+  body { background: white; }
+  .store-section { box-shadow: none; page-break-inside: avoid; }
+}
 </style>
 </head>
 <body>
-  <h1>🛒 Spéciaux d'épicerie</h1>
-  <p>Cette page sera générée automatiquement chaque jeudi à 8h AM.</p>
-  <p>Si vous voyez ce message après le déploiement, lancez le workflow manuellement depuis l'onglet <code>Actions</code> de GitHub (bouton « Run workflow »).</p>
+<div class="container">
+  <header>
+    <div class="kicker">★ Édition hebdomadaire ★ Québec ★</div>
+    <h1>Les meilleurs spéciaux <span class="amp">&amp;</span> aubaines</h1>
+    <div class="dates">du jeudi 7 au mercredi 13 mai 2026</div>
+    <p class="intro">
+      Une compilation hebdomadaire des meilleures occasions à saisir dans les quatre principales bannières québécoises. Mis à jour automatiquement chaque jeudi matin.
+    </p>
+    <div class="stats-bar">
+      <div class="stat"><strong>4</strong>Épiceries</div>
+      <div class="stat"><strong>70</strong>Spéciaux</div>
+      <div class="stat"><strong>7 jours</strong>Validité</div>
+    </div>
+    <div class="update-badge">Dernière mise à jour : 2026-05-13 14:47</div>
+  </header>
+
+  
+  <section class="store-section super-c">
+    <div class="store-header">
+      <div>
+        <div class="store-name">Super C</div>
+        <div class="store-count">21 spéciaux repérés</div>
+      </div>
+      <div class="store-tagline">Beau · Bon · Pas cher</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th class="num">Prix régulier</th>
+            <th class="num">Rabais</th>
+            <th class="num">Économie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Avocat</span></td>
+            <td class="num"><span class="price-reg estim">1,78 $</span></td>
+            <td class="num"><span class="price-sale">0,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Laitue Duo Gen V</span></td>
+            <td class="num"><span class="price-reg estim">3,58 $</span></td>
+            <td class="num"><span class="price-sale">1,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Mûres 150-170g</span></td>
+            <td class="num"><span class="price-reg estim">3,58 $</span></td>
+            <td class="num"><span class="price-sale">1,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Légumes</span><span class="item-name">Oignons jaunes sac 2lb</span></td>
+            <td class="num"><span class="price-reg estim">1,78 $</span></td>
+            <td class="num"><span class="price-sale">0,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Bleuets chopine</span></td>
+            <td class="num"><span class="price-reg estim">4,75 $</span></td>
+            <td class="num"><span class="price-sale">2,88 $</span></td>
+            <td class="num"><span class="savings medium">−39 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Tomates mélangées cerises ou raisins 680g<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">8,23 $</span></td>
+            <td class="num"><span class="price-sale">4,99 $</span></td>
+            <td class="num"><span class="savings medium">−39 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Boisson gazeuse Pepsi, Coke 6x710ml</span></td>
+            <td class="num"><span class="price-reg estim">5,81 $</span></td>
+            <td class="num"><span class="price-sale">3,75 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Fromage en bloc Cracker Barrel 400g, ou râpé 250-320g</span></td>
+            <td class="num"><span class="price-reg estim">9,25 $</span></td>
+            <td class="num"><span class="price-sale">5,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Fromage en bloc P’tit Québec 500g ou râpé 400g</span></td>
+            <td class="num"><span class="price-reg estim">9,25 $</span></td>
+            <td class="num"><span class="price-sale">5,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Œufs blancs Selection 18 un<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">6,18 $</span></td>
+            <td class="num"><span class="price-sale">3,99 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Préparation de fromage fondu Singles Kraft tranches 410g</span></td>
+            <td class="num"><span class="price-reg estim">6,15 $</span></td>
+            <td class="num"><span class="price-sale">3,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Assaisonnements Club House 33-220g</span></td>
+            <td class="num"><span class="price-reg estim">4,34 $</span></td>
+            <td class="num"><span class="price-sale">2,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Floral</span><span class="item-name">Bananes plantain 99¢/lb ou</span></td>
+            <td class="num"><span class="price-reg estim">3,16 $/kg</span></td>
+            <td class="num"><span class="price-sale">2,18 $/kg</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Bifteck de côte d’aloyau</span></td>
+            <td class="num"><span class="price-reg estim">14,33 $/lb</span></td>
+            <td class="num"><span class="price-sale">9,88 $/lb</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Cheez Whiz de Kraft 450g</span></td>
+            <td class="num"><span class="price-reg estim">5,76 $</span></td>
+            <td class="num"><span class="price-sale">3,97 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Poisson</span><span class="item-name">Filet de saumon Atlantique frais</span></td>
+            <td class="num"><span class="price-reg estim">13,04 $/lb</span></td>
+            <td class="num"><span class="price-sale">8,99 $/lb</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boulangerie</span><span class="item-name">Pains ultra-moelleux à hot-dog ou hamburger Pom 6 un</span></td>
+            <td class="num"><span class="price-reg estim">3,87 $</span></td>
+            <td class="num"><span class="price-sale">2,67 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Petits gâteaux Vachon 6-12 un</span></td>
+            <td class="num"><span class="price-reg estim">3,87 $</span></td>
+            <td class="num"><span class="price-sale">2,67 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Bœuf haché extra-maigre</span></td>
+            <td class="num"><span class="price-reg estim">8,39 $/lb</span></td>
+            <td class="num"><span class="price-sale">5,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Brochettes de bœuf, de poulet ou de porc</span></td>
+            <td class="num"><span class="price-reg estim">13,99 $/lb</span></td>
+            <td class="num"><span class="price-sale">9,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Poitrines de poulet frais</span></td>
+            <td class="num"><span class="price-reg estim">4,19 $/lb</span></td>
+            <td class="num"><span class="price-sale">2,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="store-section maxi">
+    <div class="store-header">
+      <div>
+        <div class="store-name">Maxi</div>
+        <div class="store-count">19 spéciaux repérés</div>
+      </div>
+      <div class="store-tagline">Mêmes bas prix · Tous les jours</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th class="num">Prix régulier</th>
+            <th class="num">Rabais</th>
+            <th class="num">Économie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="category">Légumes</span><span class="item-name">Champignons blancs entiers PC 227g<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">1,78 $</span></td>
+            <td class="num"><span class="price-sale">0,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Saucisses fumées Lafleur 450g<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">3,58 $</span></td>
+            <td class="num"><span class="price-sale">1,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Poivrons doux rouges, jaunes ou orange</span></td>
+            <td class="num"><span class="price-reg estim">3,90 $/lb</span></td>
+            <td class="num"><span class="price-sale">2,44 $/lb</span></td>
+            <td class="num"><span class="savings medium">−37 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Barre de fromage ou râpé mozzarellissima Saputo 1kg</span></td>
+            <td class="num"><span class="price-reg estim">17,03 $</span></td>
+            <td class="num"><span class="price-sale">10,99 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Boisson gazeuses Pepsi 24x355ml</span></td>
+            <td class="num"><span class="price-reg estim">20,13 $</span></td>
+            <td class="num"><span class="price-sale">12,99 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Jus d’orange ou boissons Tropicana certaines variétés 1,36/1,75L</span></td>
+            <td class="num"><span class="price-reg estim">5,39 $</span></td>
+            <td class="num"><span class="price-sale">3,48 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Garde-manger</span><span class="item-name">Croustilles cuites à la marmite, Pleines de ou Saveurs du monde PC 200g</span></td>
+            <td class="num"><span class="price-reg estim">3,00 $</span></td>
+            <td class="num"><span class="price-sale">2,00 $</span></td>
+            <td class="num"><span class="savings medium">−33 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Drumstick ou friandises glacées 4-10 un ou Dessert glacé 1,5L Nestlé</span></td>
+            <td class="num"><span class="price-reg estim">7,24 $</span></td>
+            <td class="num"><span class="price-sale">4,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Mandarines sac de 1,5lb</span></td>
+            <td class="num"><span class="price-reg estim">4,34 $</span></td>
+            <td class="num"><span class="price-sale">2,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Mayonnaise MAG 750-890ml</span></td>
+            <td class="num"><span class="price-reg estim">7,24 $</span></td>
+            <td class="num"><span class="price-sale">4,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Melon d’eau entier sans pépins</span></td>
+            <td class="num"><span class="price-reg estim">5,47 $</span></td>
+            <td class="num"><span class="price-sale">3,77 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Ménager</span><span class="item-name">Mouchoirs Scotties 12×126 feuilles</span></td>
+            <td class="num"><span class="price-reg estim">17,39 $</span></td>
+            <td class="num"><span class="price-sale">11,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boulangerie</span><span class="item-name">Pains hot-dog ou hamburger sans nom 12 un</span></td>
+            <td class="num"><span class="price-reg estim">2,90 $</span></td>
+            <td class="num"><span class="price-sale">2,00 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Floral</span><span class="item-name">Panier suspendu d’annuelles certaines variétés 10 pouces</span></td>
+            <td class="num"><span class="price-reg estim">14,50 $</span></td>
+            <td class="num"><span class="price-sale">10,00 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Papier hygiénique Cashmere 20=60 rouleaux</span></td>
+            <td class="num"><span class="price-reg estim">17,39 $</span></td>
+            <td class="num"><span class="price-sale">11,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Prunes noires 2lb</span></td>
+            <td class="num"><span class="price-reg estim">5,79 $</span></td>
+            <td class="num"><span class="price-sale">3,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Bœuf haché mi-maigre</span></td>
+            <td class="num"><span class="price-reg estim">6,99 $/lb</span></td>
+            <td class="num"><span class="price-sale">4,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Filet de poitrine de poulet</span></td>
+            <td class="num"><span class="price-reg estim">9,79 $/lb</span></td>
+            <td class="num"><span class="price-sale">6,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Médaillon de filet mignon de bœuf Houston 170g</span></td>
+            <td class="num"><span class="price-reg estim">13,83 $</span></td>
+            <td class="num"><span class="price-sale">9,88 $</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="store-section metro">
+    <div class="store-header">
+      <div>
+        <div class="store-name">Metro</div>
+        <div class="store-count">16 spéciaux repérés</div>
+      </div>
+      <div class="store-tagline">Mon Metro · Mon quartier</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th class="num">Prix régulier</th>
+            <th class="num">Rabais</th>
+            <th class="num">Économie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Yogourt à boire Yop Yoplait 200ml<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">1,75 $</span></td>
+            <td class="num"><span class="price-sale">0,97 $</span></td>
+            <td class="num"><span class="savings high">−45 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boulangerie</span><span class="item-name">Baguette et Cheez-it choix varié</span></td>
+            <td class="num"><span class="price-reg estim">3,58 $</span></td>
+            <td class="num"><span class="price-sale">1,99 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Légumes</span><span class="item-name">Mini concombres 6 un</span></td>
+            <td class="num"><span class="price-reg estim">2,59 $</span></td>
+            <td class="num"><span class="price-sale">1,44 $</span></td>
+            <td class="num"><span class="savings medium">−44 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Grosses cerises</span></td>
+            <td class="num"><span class="price-reg estim">8,23 $/lb</span></td>
+            <td class="num"><span class="price-sale">4,99 $/lb</span></td>
+            <td class="num"><span class="savings medium">−39 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Beurre Selection 454g</span></td>
+            <td class="num"><span class="price-reg estim">7,36 $</span></td>
+            <td class="num"><span class="price-sale">4,75 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Crème glacée Irrésistible 1,5L</span></td>
+            <td class="num"><span class="price-reg estim">7,39 $</span></td>
+            <td class="num"><span class="price-sale">4,77 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Extra cheddar fromage en tranche 390g</span></td>
+            <td class="num"><span class="price-reg estim">6,15 $</span></td>
+            <td class="num"><span class="price-sale">3,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Fromage à la crème Philadelphia 227-250g</span></td>
+            <td class="num"><span class="price-reg estim">6,15 $</span></td>
+            <td class="num"><span class="price-sale">3,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Eau gazéifiée Montellier 10x355ml<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">7,24 $</span></td>
+            <td class="num"><span class="price-sale">4,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Boisson</span><span class="item-name">Eau pétillante Bubly 12x355ml<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">7,24 $</span></td>
+            <td class="num"><span class="price-sale">4,99 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Poisson</span><span class="item-name">Homard vivant<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">12,56 $/lb</span></td>
+            <td class="num"><span class="price-sale">8,66 $/lb</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Mayonnaise Hellmann’s 710-890ml</span></td>
+            <td class="num"><span class="price-reg estim">8,37 $</span></td>
+            <td class="num"><span class="price-sale">5,77 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Ailes de poulet Flamingo 550g</span></td>
+            <td class="num"><span class="price-reg estim">12,59 $</span></td>
+            <td class="num"><span class="price-sale">8,99 $</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Filet de bœuf entier<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">22,23 $/lb</span></td>
+            <td class="num"><span class="price-sale">15,88 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Poitrines de poulet frais désossées</span></td>
+            <td class="num"><span class="price-reg estim">7,62 $/lb</span></td>
+            <td class="num"><span class="price-sale">5,44 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Saucisses italiennes Roma surgelées 2,25kg</span></td>
+            <td class="num"><span class="price-reg estim">28,00 $</span></td>
+            <td class="num"><span class="price-sale">20,00 $</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="store-section iga">
+    <div class="store-header">
+      <div>
+        <div class="store-name">IGA</div>
+        <div class="store-count">14 spéciaux repérés</div>
+      </div>
+      <div class="store-tagline">Vivez mieux · Mangez mieux</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th class="num">Prix régulier</th>
+            <th class="num">Rabais</th>
+            <th class="num">Économie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Bleuets 551ml<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">4,93 $</span></td>
+            <td class="num"><span class="price-sale">2,99 $</span></td>
+            <td class="num"><span class="savings medium">−39 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Légumes</span><span class="item-name">Salade hachée Taylor Farms 292/377g<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">6,35 $</span></td>
+            <td class="num"><span class="price-sale">3,97 $</span></td>
+            <td class="num"><span class="savings medium">−37 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Crème glacée ou dessert glacée Nestlé 1,5L</span></td>
+            <td class="num"><span class="price-reg estim">7,66 $</span></td>
+            <td class="num"><span class="price-sale">4,94 $</span></td>
+            <td class="num"><span class="savings medium">−36 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Laitier</span><span class="item-name">Produit de fromage fondu tranché Kraft 785/825g</span></td>
+            <td class="num"><span class="price-reg estim">10,80 $</span></td>
+            <td class="num"><span class="price-sale">6,97 $</span></td>
+            <td class="num"><span class="savings medium">−35 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Garde-manger</span><span class="item-name">Biscuits Leclerc Célébration 200/350g</span></td>
+            <td class="num"><span class="price-reg estim">3,71 $</span></td>
+            <td class="num"><span class="price-sale">2,47 $</span></td>
+            <td class="num"><span class="savings medium">−33 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Garde-manger</span><span class="item-name">Croustilles Lay’s 177-235g</span></td>
+            <td class="num"><span class="price-reg estim">4,16 $</span></td>
+            <td class="num"><span class="price-sale">2,77 $</span></td>
+            <td class="num"><span class="savings medium">−33 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Épicerie</span><span class="item-name">Friandises glacées Del Monte, Christie, Cadbury ou Nestlé sélection variée</span></td>
+            <td class="num"><span class="price-reg estim">7,16 $</span></td>
+            <td class="num"><span class="price-sale">4,94 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Poisson</span><span class="item-name">Homard frais cuit ou vivant<span class="scene-mark">★ MEMBRE</span></span></td>
+            <td class="num"><span class="price-reg estim">12,72 $/lb</span></td>
+            <td class="num"><span class="price-sale">8,77 $/lb</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Fruits</span><span class="item-name">Mangue ataulfo ou rouges filet de 5 un</span></td>
+            <td class="num"><span class="price-reg estim">8,70 $</span></td>
+            <td class="num"><span class="price-sale">6,00 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Garde-manger</span><span class="item-name">Mayonnaise ou sauce style mayonnaise Hellmann’s 710/890ml</span></td>
+            <td class="num"><span class="price-reg estim">8,37 $</span></td>
+            <td class="num"><span class="price-sale">5,77 $</span></td>
+            <td class="num"><span class="savings medium">−31 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Bavette de bœuf marinée Top Gourmet</span></td>
+            <td class="num"><span class="price-reg estim">20,99 $/lb</span></td>
+            <td class="num"><span class="price-sale">14,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Côtelettes de longe d’agneau assaisonnées</span></td>
+            <td class="num"><span class="price-reg estim">15,39 $/lb</span></td>
+            <td class="num"><span class="price-sale">10,99 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Côtes de dos de porc frais ou ailes de poulet surgelées St-Hubert 575-625g</span></td>
+            <td class="num"><span class="price-reg estim">13,99 $</span></td>
+            <td class="num"><span class="price-sale">9,99 $</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+          <tr>
+            <td><span class="category">Viande</span><span class="item-name">Galettes d’épaule de bœuf haché mi-maigre Sterling Silver</span></td>
+            <td class="num"><span class="price-reg estim">7,62 $/lb</span></td>
+            <td class="num"><span class="price-sale">5,44 $/lb</span></td>
+            <td class="num"><span class="savings ">−29 %</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <div class="disclaimer">
+    <strong>* À propos des prix réguliers :</strong> les prix réguliers marqués d'un astérisque (*) sont des estimations basées sur les prix habituels au Québec — les économies réelles peuvent varier. Les prix peuvent différer d'une succursale à l'autre. Certains rabais nécessitent une carte de fidélité (programme Moi pour Metro/Super C, Scène+ pour IGA, PC Optimum pour Maxi). Les items marqués <span class="scene-mark">★ MEMBRE</span> exigent la carte de fidélité de la bannière.
+  </div>
+
+  <footer>
+    Données scrapées de <a href="https://circulaires.club" target="_blank" rel="noopener">circulaires.club</a> ·
+    Page générée le 2026-05-13 14:47 ·
+    <a href="https://github.com" target="_blank" rel="noopener">Code source</a>
+  </footer>
+</div>
 </body>
 </html>
