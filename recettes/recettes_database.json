@@ -1,0 +1,876 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated": "2026-05-13",
+    "total_recipes": 30,
+    "description": "30 recettes santé équilibrées pour jayballz.ca/recettes"
+  },
+  "recipes": [
+    {
+      "id": 1,
+      "titre": "Poulet rôti au citron et romarin",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poitrines de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Citron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Romarin frais", "quantite": 3, "unite": "branches", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Huile d'olive", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Pommes de terre", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Brocoli", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Préchauffer le four à 400°F (200°C)",
+        "Mélanger le jus de citron, l'ail haché, le romarin effeuillé et l'huile d'olive",
+        "Badigeonner les poitrines de poulet avec la marinade et laisser reposer 10 minutes",
+        "Couper les pommes de terre en quartiers et les disposer autour du poulet dans un plat",
+        "Cuire au four 35-40 minutes jusqu'à ce que le poulet soit doré et cuit",
+        "Pendant ce temps, cuire le brocoli à la vapeur 5-6 minutes",
+        "Servir le poulet tranché avec les pommes de terre rôties et le brocoli"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 40,
+      "portions": 4,
+      "calories_par_portion": 420,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 2,
+      "titre": "Saumon poêlé sauce miel et lime",
+      "categorie": "poisson",
+      "ingredients": [
+        {"nom": "Filets de saumon", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Miel", "quantite": 45, "unite": "ml", "rabais_possible": false},
+        {"nom": "Lime", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Sauce soya", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Riz basmati", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Asperges", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Huile d'olive", "quantite": 30, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Cuire le riz selon les instructions de l'emballage",
+        "Mélanger le miel, le jus de lime et la sauce soya dans un bol",
+        "Chauffer l'huile dans une poêle à feu moyen-élevé",
+        "Cuire le saumon côté peau en bas pendant 4 minutes",
+        "Retourner, badigeonner avec la sauce et cuire 3-4 minutes",
+        "Cuire les asperges à la vapeur ou poêlées 5 minutes",
+        "Servir le saumon sur le riz avec les asperges, napper de sauce"
+      ],
+      "temps_preparation": 10,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 485,
+      "proteines_par_portion": 35
+    },
+    {
+      "id": 3,
+      "titre": "Bœuf haché à la mexicaine (burrito bowl)",
+      "categorie": "boeuf",
+      "ingredients": [
+        {"nom": "Bœuf haché maigre", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Riz brun", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Haricots noirs en conserve", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Tomate", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Épices mexicaines", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Yogourt grec", "quantite": 200, "unite": "ml", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Cuire le riz brun selon les instructions (environ 40 minutes)",
+        "Faire revenir l'oignon haché et le poivron coupé en dés",
+        "Ajouter le bœuf haché et cuire jusqu'à ce qu'il soit doré",
+        "Incorporer les épices mexicaines et les haricots noirs égouttés",
+        "Couper les tomates en dés",
+        "Assembler les bols: riz, bœuf, tomates fraîches",
+        "Garnir de yogourt grec en guise de crème sure"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 45,
+      "portions": 4,
+      "calories_par_portion": 520,
+      "proteines_par_portion": 36
+    },
+    {
+      "id": 4,
+      "titre": "Poulet au beurre version santé",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poitrines de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Yogourt grec", "quantite": 250, "unite": "ml", "rabais_possible": true},
+        {"nom": "Tomates en dés", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Gingembre frais", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Garam masala", "quantite": 15, "unite": "ml", "rabais_possible": false},
+        {"nom": "Riz basmati", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Épinards", "quantite": 200, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Couper le poulet en cubes et mariner dans la moitié du yogourt 30 minutes",
+        "Faire revenir l'oignon, l'ail et le gingembre hachés",
+        "Ajouter le poulet et cuire 5 minutes",
+        "Incorporer les tomates en dés et le garam masala",
+        "Laisser mijoter 15 minutes à feu doux",
+        "Ajouter le reste du yogourt et les épinards, mélanger",
+        "Cuire le riz et servir avec le poulet"
+      ],
+      "temps_preparation": 40,
+      "temps_cuisson": 30,
+      "portions": 4,
+      "calories_par_portion": 445,
+      "proteines_par_portion": 42
+    },
+    {
+      "id": 5,
+      "titre": "Tofu général Tao croustillant",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Tofu ferme", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Fécule de maïs", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Sauce soya", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Vinaigre de riz", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Miel", "quantite": 45, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 3, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Gingembre frais", "quantite": 20, "unite": "g", "rabais_possible": false},
+        {"nom": "Brocoli", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Riz jasmin", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Presser le tofu pour enlever l'excès d'eau, couper en cubes",
+        "Enrober les cubes de tofu de fécule de maïs",
+        "Cuire au four à 400°F pendant 25 minutes jusqu'à croustillant",
+        "Préparer la sauce: mélanger sauce soya, vinaigre, miel, ail et gingembre",
+        "Faire sauter le brocoli 5 minutes",
+        "Verser la sauce sur le tofu et mélanger",
+        "Servir sur le riz avec le brocoli"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 30,
+      "portions": 4,
+      "calories_par_portion": 385,
+      "proteines_par_portion": 18
+    },
+    {
+      "id": 6,
+      "titre": "Filet de porc à l'érable et moutarde",
+      "categorie": "porc",
+      "ingredients": [
+        {"nom": "Filet de porc", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Sirop d'érable", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Moutarde de Dijon", "quantite": 45, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 3, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Patates douces", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Haricots verts", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Huile d'olive", "quantite": 30, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Mélanger le sirop d'érable, la moutarde et l'ail haché",
+        "Badigeonner le filet de porc avec la moitié de la sauce",
+        "Couper les patates douces en cubes et mélanger avec l'huile",
+        "Disposer le porc et les patates sur une plaque",
+        "Cuire au four à 375°F pendant 25-30 minutes",
+        "Cuire les haricots à la vapeur 6 minutes",
+        "Trancher le porc et servir avec le reste de sauce, patates et haricots"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 30,
+      "portions": 4,
+      "calories_par_portion": 410,
+      "proteines_par_portion": 35
+    },
+    {
+      "id": 7,
+      "titre": "Crevettes à l'ail et citron",
+      "categorie": "fruits_de_mer",
+      "ingredients": [
+        {"nom": "Crevettes", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Ail", "quantite": 6, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Citron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Persil frais", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Pâtes linguine", "quantite": 350, "unite": "g", "rabais_possible": true},
+        {"nom": "Tomates cerises", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Huile d'olive", "quantite": 45, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Cuire les pâtes selon les instructions de l'emballage",
+        "Chauffer l'huile d'olive et faire revenir l'ail haché",
+        "Ajouter les crevettes et cuire 2-3 minutes par côté",
+        "Ajouter les tomates cerises coupées en deux et cuire 2 minutes",
+        "Incorporer le jus de citron et le persil haché",
+        "Égoutter les pâtes et les mélanger avec les crevettes",
+        "Servir immédiatement avec un quartier de citron"
+      ],
+      "temps_preparation": 10,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 425,
+      "proteines_par_portion": 32
+    },
+    {
+      "id": 8,
+      "titre": "Poulet teriyaki avec légumes",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Cuisses de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Sauce soya", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Miel", "quantite": 45, "unite": "ml", "rabais_possible": false},
+        {"nom": "Gingembre frais", "quantite": 20, "unite": "g", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 3, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Brocoli", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Riz jasmin", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Mélanger sauce soya, miel, gingembre et ail pour la sauce teriyaki",
+        "Couper le poulet en morceaux et mariner 20 minutes",
+        "Cuire le riz selon les instructions",
+        "Faire sauter le poulet dans une poêle chaude 6-8 minutes",
+        "Ajouter le brocoli et les poivrons coupés, cuire 5 minutes",
+        "Verser la sauce et laisser épaissir 2 minutes",
+        "Servir sur le riz"
+      ],
+      "temps_preparation": 30,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 450,
+      "proteines_par_portion": 36
+    },
+    {
+      "id": 9,
+      "titre": "Chili végétarien aux haricots noirs",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Haricots noirs en conserve", "quantite": 800, "unite": "ml", "rabais_possible": true},
+        {"nom": "Haricots rouges en conserve", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Tomates en dés", "quantite": 800, "unite": "ml", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Maïs en grains", "quantite": 300, "unite": "ml", "rabais_possible": true},
+        {"nom": "Épices chili", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Yogourt grec", "quantite": 200, "unite": "ml", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire revenir l'oignon et le poivron coupés en dés",
+        "Ajouter les tomates en dés et les épices chili",
+        "Incorporer les haricots égouttés et le maïs",
+        "Laisser mijoter 25-30 minutes à feu doux",
+        "Ajuster l'assaisonnement au besoin",
+        "Servir dans des bols avec une cuillère de yogourt grec",
+        "Accompagner de pain croûté ou tortillas"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 30,
+      "portions": 6,
+      "calories_par_portion": 320,
+      "proteines_par_portion": 16
+    },
+    {
+      "id": 10,
+      "titre": "Saumon en croûte de sésame",
+      "categorie": "poisson",
+      "ingredients": [
+        {"nom": "Filets de saumon", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Graines de sésame", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Sauce soya", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Miel", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Edamame", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Riz à sushi", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Concombre", "quantite": 1, "unite": "un.", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Cuire le riz à sushi selon les instructions",
+        "Mélanger sauce soya et miel, badigeonner le saumon",
+        "Enrober le saumon de graines de sésame",
+        "Cuire au four à 400°F pendant 12-15 minutes",
+        "Cuire l'edamame à la vapeur 5 minutes",
+        "Couper le concombre en fines tranches",
+        "Servir le saumon sur le riz avec edamame et concombre"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 495,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 11,
+      "titre": "Porc haché à la thaï (larb)",
+      "categorie": "porc",
+      "ingredients": [
+        {"nom": "Porc haché maigre", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Lime", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Échalotes", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Menthe fraîche", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Coriandre fraîche", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Sauce de poisson", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Riz jasmin", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Laitue Boston", "quantite": 1, "unite": "un.", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Cuire le porc haché dans une poêle jusqu'à ce qu'il soit bien cuit",
+        "Retirer du feu et laisser tiédir légèrement",
+        "Ajouter le jus de lime, la sauce de poisson et les échalotes hachées",
+        "Incorporer la menthe et la coriandre ciselées",
+        "Cuire le riz selon les instructions",
+        "Séparer les feuilles de laitue",
+        "Servir le porc dans les feuilles de laitue avec le riz en accompagnement"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 395,
+      "proteines_par_portion": 32
+    },
+    {
+      "id": 12,
+      "titre": "Poulet cacciatore (chasseur)",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Hauts de cuisse de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Tomates en dés", "quantite": 800, "unite": "ml", "rabais_possible": true},
+        {"nom": "Champignons", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Origan séché", "quantite": 10, "unite": "ml", "rabais_possible": false},
+        {"nom": "Pâtes penne", "quantite": 350, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire dorer le poulet dans une grande poêle, réserver",
+        "Faire revenir l'oignon, l'ail, les poivrons et les champignons",
+        "Ajouter les tomates en dés et l'origan",
+        "Remettre le poulet dans la sauce",
+        "Laisser mijoter 30 minutes à couvert",
+        "Cuire les pâtes selon les instructions",
+        "Servir le poulet et la sauce sur les pâtes"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 40,
+      "portions": 4,
+      "calories_par_portion": 465,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 13,
+      "titre": "Boulettes de lentilles et quinoa",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Lentilles cuites", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Quinoa cuit", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Ail", "quantite": 3, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Œuf", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Chapelure", "quantite": 125, "unite": "ml", "rabais_possible": false},
+        {"nom": "Sauce tomate", "quantite": 500, "unite": "ml", "rabais_possible": true},
+        {"nom": "Salade verte", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Écraser grossièrement les lentilles à la fourchette",
+        "Mélanger avec le quinoa, l'oignon haché, l'ail, l'œuf et la chapelure",
+        "Former 12 boulettes avec le mélange",
+        "Cuire au four à 375°F pendant 25 minutes en retournant à mi-cuisson",
+        "Réchauffer la sauce tomate",
+        "Préparer une salade verte simple",
+        "Servir les boulettes avec la sauce et la salade"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 25,
+      "portions": 4,
+      "calories_par_portion": 340,
+      "proteines_par_portion": 18
+    },
+    {
+      "id": 14,
+      "titre": "Tilapia en papillote aux légumes",
+      "categorie": "poisson",
+      "ingredients": [
+        {"nom": "Filets de tilapia", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Courgette", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Tomates cerises", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Citron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Basilic frais", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Huile d'olive", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Couscous", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Préchauffer le four à 400°F",
+        "Couper 4 grandes feuilles de papier parchemin",
+        "Déposer les légumes tranchés au centre de chaque feuille",
+        "Placer un filet de poisson sur les légumes",
+        "Ajouter citron, ail, basilic et huile d'olive",
+        "Refermer en papillote et cuire 18-20 minutes",
+        "Préparer le couscous et servir avec les papillotes"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 380,
+      "proteines_par_portion": 35
+    },
+    {
+      "id": 15,
+      "titre": "Bœuf et brocoli sauté",
+      "categorie": "boeuf",
+      "ingredients": [
+        {"nom": "Bifteck de bœuf", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Brocoli", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Sauce soya", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Sauce d'huître", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Gingembre frais", "quantite": 20, "unite": "g", "rabais_possible": false},
+        {"nom": "Fécule de maïs", "quantite": 15, "unite": "ml", "rabais_possible": false},
+        {"nom": "Riz basmati", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Trancher le bœuf finement contre le grain",
+        "Mélanger sauce soya, sauce d'huître et fécule de maïs",
+        "Cuire le riz selon les instructions",
+        "Faire sauter le bœuf à feu vif 2-3 minutes, réserver",
+        "Faire sauter le brocoli, l'ail et le gingembre 4 minutes",
+        "Remettre le bœuf, ajouter la sauce et mélanger",
+        "Servir immédiatement sur le riz"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 445,
+      "proteines_par_portion": 34
+    },
+    {
+      "id": 16,
+      "titre": "Poulet méditerranéen au four",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poitrines de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Tomates cerises", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Olives Kalamata", "quantite": 100, "unite": "g", "rabais_possible": false},
+        {"nom": "Fromage feta", "quantite": 150, "unite": "g", "rabais_possible": true},
+        {"nom": "Origan séché", "quantite": 10, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Couscous perlé", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Épinards", "quantite": 200, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Préchauffer le four à 375°F",
+        "Disposer le poulet dans un plat allant au four",
+        "Ajouter tomates, olives, ail et origan autour du poulet",
+        "Émietter le feta sur le dessus",
+        "Cuire 30-35 minutes jusqu'à ce que le poulet soit cuit",
+        "Cuire le couscous selon les instructions",
+        "Servir le poulet avec le couscous et des épinards frais"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 35,
+      "portions": 4,
+      "calories_par_portion": 475,
+      "proteines_par_portion": 45
+    },
+    {
+      "id": 17,
+      "titre": "Curry de pois chiches et épinards",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Pois chiches en conserve", "quantite": 800, "unite": "ml", "rabais_possible": true},
+        {"nom": "Épinards", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Lait de coco", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Tomates en dés", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Ail", "quantite": 4, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Pâte de curry", "quantite": 45, "unite": "ml", "rabais_possible": false},
+        {"nom": "Riz basmati", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire revenir l'oignon et l'ail hachés",
+        "Ajouter la pâte de curry et cuire 1 minute",
+        "Incorporer les tomates en dés et le lait de coco",
+        "Ajouter les pois chiches égouttés",
+        "Laisser mijoter 15 minutes",
+        "Ajouter les épinards et cuire jusqu'à ce qu'ils fanent",
+        "Servir sur le riz basmati"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 25,
+      "portions": 4,
+      "calories_par_portion": 420,
+      "proteines_par_portion": 15
+    },
+    {
+      "id": 18,
+      "titre": "Côtelettes de porc aux pommes",
+      "categorie": "porc",
+      "ingredients": [
+        {"nom": "Côtelettes de porc", "quantite": 4, "unite": "un.", "rabais_possible": true},
+        {"nom": "Pommes", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Bouillon de poulet", "quantite": 250, "unite": "ml", "rabais_possible": false},
+        {"nom": "Moutarde de Dijon", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Thym frais", "quantite": 4, "unite": "branches", "rabais_possible": false},
+        {"nom": "Purée de pommes de terre", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Haricots verts", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire dorer les côtelettes de porc des deux côtés, réserver",
+        "Faire revenir l'oignon tranché et les pommes en quartiers",
+        "Ajouter le bouillon, la moutarde et le thym",
+        "Remettre les côtelettes dans la poêle",
+        "Laisser mijoter 15 minutes à couvert",
+        "Préparer la purée de pommes de terre et cuire les haricots à la vapeur",
+        "Servir les côtelettes avec la sauce aux pommes, purée et haricots"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 30,
+      "portions": 4,
+      "calories_par_portion": 430,
+      "proteines_par_portion": 36
+    },
+    {
+      "id": 19,
+      "titre": "Poulet parmigiana léger",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poitrines de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Chapelure panko", "quantite": 125, "unite": "ml", "rabais_possible": false},
+        {"nom": "Parmesan râpé", "quantite": 60, "unite": "ml", "rabais_possible": true},
+        {"nom": "Œuf", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Sauce tomate", "quantite": 500, "unite": "ml", "rabais_possible": true},
+        {"nom": "Mozzarella", "quantite": 150, "unite": "g", "rabais_possible": true},
+        {"nom": "Pâtes spaghetti", "quantite": 350, "unite": "g", "rabais_possible": true},
+        {"nom": "Basilic frais", "quantite": 20, "unite": "g", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Aplatir légèrement les poitrines de poulet",
+        "Tremper dans l'œuf battu puis dans le mélange chapelure-parmesan",
+        "Cuire au four à 400°F pendant 15 minutes",
+        "Napper de sauce tomate et garnir de mozzarella",
+        "Remettre au four 10 minutes pour gratiner",
+        "Cuire les pâtes selon les instructions",
+        "Servir le poulet sur les pâtes avec du basilic frais"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 25,
+      "portions": 4,
+      "calories_par_portion": 520,
+      "proteines_par_portion": 48
+    },
+    {
+      "id": 20,
+      "titre": "Salade de quinoa méditerranéenne",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Quinoa", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Concombre", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Tomates", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Poivron rouge", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Oignon rouge", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Fromage feta", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Olives Kalamata", "quantite": 100, "unite": "g", "rabais_possible": false},
+        {"nom": "Citron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Huile d'olive", "quantite": 60, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Cuire le quinoa selon les instructions et laisser refroidir",
+        "Couper tous les légumes en petits dés",
+        "Préparer la vinaigrette: jus de citron et huile d'olive",
+        "Mélanger le quinoa avec les légumes",
+        "Ajouter le feta émietté et les olives tranchées",
+        "Verser la vinaigrette et bien mélanger",
+        "Réfrigérer au moins 30 minutes avant de servir"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 390,
+      "proteines_par_portion": 14
+    },
+    {
+      "id": 21,
+      "titre": "Truite arc-en-ciel aux amandes",
+      "categorie": "poisson",
+      "ingredients": [
+        {"nom": "Filets de truite", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Amandes effilées", "quantite": 80, "unite": "ml", "rabais_possible": false},
+        {"nom": "Citron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Beurre", "quantite": 30, "unite": "ml", "rabais_possible": true},
+        {"nom": "Persil frais", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Pommes de terre grelots", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Haricots verts", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Cuire les pommes de terre grelots à l'eau bouillante 15 minutes",
+        "Faire dorer les amandes dans une poêle sèche, réserver",
+        "Faire fondre le beurre et cuire la truite 3-4 minutes par côté",
+        "Ajouter le jus de citron et les amandes grillées",
+        "Cuire les haricots verts à la vapeur 6 minutes",
+        "Parsemer de persil frais haché",
+        "Servir la truite avec pommes de terre et haricots"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 425,
+      "proteines_par_portion": 36
+    },
+    {
+      "id": 22,
+      "titre": "Bœuf stroganoff santé",
+      "categorie": "boeuf",
+      "ingredients": [
+        {"nom": "Bifteck de bœuf", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Champignons", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Yogourt grec", "quantite": 250, "unite": "ml", "rabais_possible": true},
+        {"nom": "Moutarde de Dijon", "quantite": 30, "unite": "ml", "rabais_possible": false},
+        {"nom": "Bouillon de bœuf", "quantite": 250, "unite": "ml", "rabais_possible": false},
+        {"nom": "Pâtes aux œufs", "quantite": 350, "unite": "g", "rabais_possible": true},
+        {"nom": "Persil frais", "quantite": 30, "unite": "g", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Trancher le bœuf en lanières fines",
+        "Faire revenir le bœuf à feu vif, réserver",
+        "Faire sauter l'oignon et les champignons tranchés",
+        "Ajouter le bouillon et la moutarde, laisser mijoter 10 minutes",
+        "Retirer du feu et incorporer le yogourt grec",
+        "Remettre le bœuf et réchauffer doucement",
+        "Servir sur les pâtes cuites avec du persil"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 25,
+      "portions": 4,
+      "calories_par_portion": 485,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 23,
+      "titre": "Poulet tikka masala",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poitrines de poulet", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Yogourt grec", "quantite": 200, "unite": "ml", "rabais_possible": true},
+        {"nom": "Pâte tikka masala", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Tomates en dés", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Lait de coco léger", "quantite": 250, "unite": "ml", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Riz basmati", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Coriandre fraîche", "quantite": 30, "unite": "g", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Mélanger le poulet avec le yogourt et la moitié de la pâte tikka, mariner 30 min",
+        "Faire revenir l'oignon haché",
+        "Ajouter le reste de la pâte tikka et cuire 1 minute",
+        "Incorporer les tomates et le lait de coco",
+        "Ajouter le poulet et laisser mijoter 20 minutes",
+        "Cuire le riz basmati",
+        "Servir le poulet sur le riz avec de la coriandre"
+      ],
+      "temps_preparation": 40,
+      "temps_cuisson": 30,
+      "portions": 4,
+      "calories_par_portion": 465,
+      "proteines_par_portion": 42
+    },
+    {
+      "id": 24,
+      "titre": "Tacos de poisson Baja",
+      "categorie": "poisson",
+      "ingredients": [
+        {"nom": "Filets de tilapia", "quantite": 600, "unite": "g", "rabais_possible": true},
+        {"nom": "Chou rouge", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Lime", "quantite": 3, "unite": "un.", "rabais_possible": true},
+        {"nom": "Yogourt grec", "quantite": 200, "unite": "ml", "rabais_possible": true},
+        {"nom": "Coriandre fraîche", "quantite": 30, "unite": "g", "rabais_possible": false},
+        {"nom": "Tortillas de blé entier", "quantite": 8, "unite": "un.", "rabais_possible": true},
+        {"nom": "Avocat", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Épices à tacos", "quantite": 15, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Assaisonner le poisson avec les épices à tacos",
+        "Cuire le poisson au four à 400°F pendant 12 minutes",
+        "Râper finement le chou rouge",
+        "Mélanger yogourt, jus de lime et coriandre pour la sauce",
+        "Réchauffer les tortillas",
+        "Émietter le poisson sur les tortillas",
+        "Garnir de chou, avocat tranché et sauce au yogourt"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 425,
+      "proteines_par_portion": 35
+    },
+    {
+      "id": 25,
+      "titre": "Omelette aux légumes et fromage",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Œufs", "quantite": 8, "unite": "un.", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Champignons", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Épinards", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Fromage cheddar", "quantite": 150, "unite": "g", "rabais_possible": true},
+        {"nom": "Oignon vert", "quantite": 4, "unite": "tiges", "rabais_possible": true},
+        {"nom": "Pain de blé entier", "quantite": 8, "unite": "tranches", "rabais_possible": true},
+        {"nom": "Tomates", "quantite": 2, "unite": "un.", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire revenir les poivrons et champignons tranchés",
+        "Ajouter les épinards et cuire jusqu'à ce qu'ils fanent",
+        "Battre les œufs avec un peu de lait",
+        "Verser les œufs dans la poêle avec les légumes",
+        "Parsemer de fromage râpé et oignon vert haché",
+        "Cuire à feu doux jusqu'à ce que l'omelette soit prise",
+        "Servir avec du pain grillé et des tomates fraîches"
+      ],
+      "temps_preparation": 10,
+      "temps_cuisson": 15,
+      "portions": 4,
+      "calories_par_portion": 380,
+      "proteines_par_portion": 24
+    },
+    {
+      "id": 26,
+      "titre": "Pilons de poulet BBQ au four",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Pilons de poulet", "quantite": 12, "unite": "un.", "rabais_possible": true},
+        {"nom": "Sauce BBQ", "quantite": 250, "unite": "ml", "rabais_possible": false},
+        {"nom": "Paprika fumé", "quantite": 10, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail en poudre", "quantite": 10, "unite": "ml", "rabais_possible": false},
+        {"nom": "Maïs en épi", "quantite": 4, "unite": "un.", "rabais_possible": true},
+        {"nom": "Salade de chou", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Pommes de terre", "quantite": 500, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Assaisonner les pilons avec paprika et ail en poudre",
+        "Cuire au four à 400°F pendant 30 minutes",
+        "Badigeonner de sauce BBQ et cuire 15 minutes de plus",
+        "Cuire les pommes de terre au four en même temps",
+        "Cuire le maïs à l'eau bouillante 8 minutes",
+        "Préparer une salade de chou simple",
+        "Servir les pilons avec tous les accompagnements"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 45,
+      "portions": 4,
+      "calories_par_portion": 490,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 27,
+      "titre": "Porc effiloché (pulled pork) santé",
+      "categorie": "porc",
+      "ingredients": [
+        {"nom": "Rôti de porc", "quantite": 800, "unite": "g", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Bouillon de poulet", "quantite": 500, "unite": "ml", "rabais_possible": false},
+        {"nom": "Sauce BBQ", "quantite": 250, "unite": "ml", "rabais_possible": false},
+        {"nom": "Pains à hamburger de blé entier", "quantite": 8, "unite": "un.", "rabais_possible": true},
+        {"nom": "Salade de chou", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Cornichons", "quantite": 150, "unite": "g", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Placer le rôti et les oignons tranchés dans une mijoteuse",
+        "Ajouter le bouillon de poulet",
+        "Cuire à basse température 6-8 heures",
+        "Effilocher le porc à la fourchette",
+        "Mélanger avec la sauce BBQ",
+        "Griller légèrement les pains",
+        "Servir le porc sur les pains avec salade de chou et cornichons"
+      ],
+      "temps_preparation": 15,
+      "temps_cuisson": 360,
+      "portions": 8,
+      "calories_par_portion": 420,
+      "proteines_par_portion": 32
+    },
+    {
+      "id": 28,
+      "titre": "Sauté de tofu et légumes asiatiques",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Tofu ferme", "quantite": 500, "unite": "g", "rabais_possible": true},
+        {"nom": "Brocoli", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Poivron", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Oignon vert", "quantite": 6, "unite": "tiges", "rabais_possible": true},
+        {"nom": "Sauce soya", "quantite": 60, "unite": "ml", "rabais_possible": false},
+        {"nom": "Huile de sésame", "quantite": 15, "unite": "ml", "rabais_possible": false},
+        {"nom": "Ail", "quantite": 3, "unite": "gousses", "rabais_possible": false},
+        {"nom": "Nouilles de riz", "quantite": 300, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Presser le tofu et couper en cubes",
+        "Faire dorer le tofu dans une poêle chaude, réserver",
+        "Cuire les nouilles de riz selon les instructions",
+        "Faire sauter le brocoli, poivrons et oignons verts",
+        "Ajouter l'ail haché et cuire 1 minute",
+        "Remettre le tofu, ajouter sauce soya et huile de sésame",
+        "Servir sur les nouilles de riz"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 20,
+      "portions": 4,
+      "calories_par_portion": 370,
+      "proteines_par_portion": 19
+    },
+    {
+      "id": 29,
+      "titre": "Poulet rôti aux fines herbes et légumes racines",
+      "categorie": "poulet",
+      "ingredients": [
+        {"nom": "Poulet entier", "quantite": 1400, "unite": "g", "rabais_possible": true},
+        {"nom": "Carottes", "quantite": 400, "unite": "g", "rabais_possible": true},
+        {"nom": "Panais", "quantite": 300, "unite": "g", "rabais_possible": true},
+        {"nom": "Oignon", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Thym frais", "quantite": 6, "unite": "branches", "rabais_possible": false},
+        {"nom": "Romarin frais", "quantite": 4, "unite": "branches", "rabais_possible": false},
+        {"nom": "Citron", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Huile d'olive", "quantite": 45, "unite": "ml", "rabais_possible": false}
+      ],
+      "etapes": [
+        "Préchauffer le four à 375°F",
+        "Frotter le poulet avec huile, sel, poivre et fines herbes",
+        "Placer le citron coupé en deux à l'intérieur du poulet",
+        "Couper les légumes racines en gros morceaux",
+        "Disposer les légumes autour du poulet dans une rôtissoire",
+        "Cuire 1h30 ou jusqu'à 165°F à cœur",
+        "Laisser reposer 10 minutes avant de découper"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 90,
+      "portions": 6,
+      "calories_par_portion": 420,
+      "proteines_par_portion": 38
+    },
+    {
+      "id": 30,
+      "titre": "Soupe minestrone aux légumineuses",
+      "categorie": "vegetarien",
+      "ingredients": [
+        {"nom": "Haricots blancs en conserve", "quantite": 400, "unite": "ml", "rabais_possible": true},
+        {"nom": "Tomates en dés", "quantite": 800, "unite": "ml", "rabais_possible": true},
+        {"nom": "Carottes", "quantite": 2, "unite": "un.", "rabais_possible": true},
+        {"nom": "Céleri", "quantite": 3, "unite": "branches", "rabais_possible": true},
+        {"nom": "Courgette", "quantite": 1, "unite": "un.", "rabais_possible": true},
+        {"nom": "Pâtes petites (ditalini)", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Bouillon de légumes", "quantite": 1500, "unite": "ml", "rabais_possible": false},
+        {"nom": "Épinards", "quantite": 200, "unite": "g", "rabais_possible": true},
+        {"nom": "Parmesan", "quantite": 60, "unite": "g", "rabais_possible": true}
+      ],
+      "etapes": [
+        "Faire revenir carottes et céleri coupés en dés",
+        "Ajouter le bouillon de légumes et les tomates",
+        "Porter à ébullition et ajouter la courgette en dés",
+        "Laisser mijoter 15 minutes",
+        "Ajouter les pâtes et cuire selon les instructions",
+        "Incorporer les haricots et les épinards, réchauffer",
+        "Servir avec du parmesan râpé"
+      ],
+      "temps_preparation": 20,
+      "temps_cuisson": 30,
+      "portions": 6,
+      "calories_par_portion": 280,
+      "proteines_par_portion": 13
+    }
+  ]
+}
