@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D2R Mule Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      min-height: 100vh;
+    }
+    
+    .container { max-width: 1400px; width: 100%; padding: 2rem; margin: 0 auto; }
+    
+    .card { 
+      background: white; 
+      border-radius: 16px; 
+      padding: 3rem; 
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      max-width: 500px;
+      margin: 4rem auto;
+    }
+    
+    .icon-badge { 
+      width: 56px; 
+      height: 56px; 
+      background: linear-gradient(135deg, #2d5a3d 0%, #1a3d1a 100%);
+      border-radius: 12px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 1.5rem;
+      font-size: 28px;
+      color: white;
+    }
+    
+    h1 { font-size: 32px; font-weight: 600; color: #1a1a1a; margin-bottom: 0.5rem; text-align: center; }
+    .subtitle { font-size: 15px; color: #737373; text-align: center; margin-bottom: 0.25rem; }
+    .description { font-size: 14px; color: #a3a3a3; text-align: center; }
+    
+    .form-group { margin-bottom: 1.5rem; }
+    .form-label { 
+      display: block; 
+      font-size: 13px; 
+      font-weight: 600; 
+      color: #525252; 
+      margin-bottom: 8px; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .form-input, .form-select { 
+      width: 100%; 
+      padding: 14px 16px; 
+      border: 1px solid #e0e0e0; 
+      border-radius: 10px; 
+      font-size: 15px; 
+      background: #f8f9fa;
+      color: #1a1a1a;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .form-input:focus, .form-select:focus { 
+      outline: none; 
+      border-color: #2d5a3d; 
+      background: white;
+      box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+    }
+    
+    .form-input::placeholder { color: #b8b8b8; }
+    
+    .btn-primary { 
+      width: 100%; 
+      padding: 14px; 
+      background: linear-gradient(135deg, #2d5a3d 0%, #1a3d1a 100%);
+      color: white; 
+      border: none; 
+      border-radius: 10px; 
+      font-size: 15px; 
+      font-weight: 600; 
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary:hover { 
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(45, 90, 61, 0.3);
+    }
+    
+    .dashboard { background: transparent; padding: 0; }
+    
+    .dashboard-header { 
+      background: white; 
+      border-radius: 16px; 
+      padding: 2rem; 
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .dashboard-title { font-size: 28px; font-weight: 600; color: #1a1a1a; }
+    
+    .btn-group { display: flex; gap: 12px; }
+    
+    .btn { 
+      padding: 10px 20px; 
+      background: white;
+      border: 1px solid #e0e0e0; 
+      border-radius: 8px; 
+      font-size: 14px; 
+      font-weight: 500;
+      color: #525252;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn:hover { 
+      border-color: #2d5a3d; 
+      color: #2d5a3d;
+      background: #f0f7f3;
+    }
+    
+    .content-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    
+    .mule-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+      gap: 20px; 
+      margin-bottom: 2rem; 
+    }
+    
+    .mule-card { 
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border: 2px solid #f0f0f0; 
+      border-radius: 12px; 
+      padding: 1.75rem; 
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .mule-card:hover { 
+      border-color: #2d5a3d; 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    
+    .mule-card.active { 
+      border-color: #2d5a3d; 
+      border-width: 2px;
+      background: linear-gradient(135deg, #f0f7f3 0%, #e8f3ed 100%);
+    }
+    
+    .mule-card h3 { font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+    .mule-card .count { font-size: 14px; color: #737373; }
+    
+    .search-input { 
+      width: 100%; 
+      padding: 14px 20px; 
+      border: 1px solid #e0e0e0; 
+      border-radius: 12px; 
+      font-size: 15px; 
+      background: #f8f9fa;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+    
+    .search-input:focus { 
+      outline: none; 
+      border-color: #2d5a3d; 
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+    }
+    
+    .filters { display: flex; gap: 10px; margin-bottom: 2rem; flex-wrap: wrap; }
+    
+    .filter-chip { 
+      padding: 8px 18px; 
+      background: #f8f9fa; 
+      border: 1px solid #e0e0e0; 
+      border-radius: 20px; 
+      font-size: 13px; 
+      font-weight: 500;
+      color: #525252;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .filter-chip:hover { 
+      background: #f0f7f3; 
+      border-color: #2d5a3d;
+      color: #2d5a3d;
+    }
+    
+    .filter-chip.active { 
+      background: #2d5a3d; 
+      border-color: #2d5a3d; 
+      color: white; 
+    }
+    
+    .item-list { display: flex; flex-direction: column; gap: 12px; }
+    
+    .item-card { 
+      background: white;
+      border: 1px solid #f0f0f0; 
+      border-radius: 12px; 
+      padding: 16px 20px; 
+      display: flex; 
+      align-items: center; 
+      gap: 16px; 
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .item-card:hover { 
+      border-color: #e0e0e0;
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    .item-icon { 
+      width: 50px; 
+      height: 50px; 
+      border-radius: 10px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 22px; 
+      flex-shrink: 0;
+      font-weight: 500;
+      color: white;
+    }
+    
+    .item-icon.unique { background: linear-gradient(135deg, #4a3320 0%, #3d2817 100%); }
+    .item-icon.set { background: linear-gradient(135deg, #234a23 0%, #1a3d1a 100%); }
+    .item-icon.rare { background: linear-gradient(135deg, #4a4a23 0%, #3d3d1a 100%); }
+    .item-icon.magic { background: linear-gradient(135deg, #23395c 0%, #1a2d4a 100%); }
+    .item-icon.crafted { background: linear-gradient(135deg, #4a2d1d 0%, #3d2417 100%); }
+    .item-icon.normal { background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); color: #525252; }
+    
+    .item-content { flex: 1; min-width: 0; }
+    .item-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+    .item-stats { font-size: 13px; color: #737373; }
+    
+    .item-badges { display: flex; gap: 8px; }
+    .badge { 
+      padding: 5px 12px; 
+      background: #f0f0f0; 
+      border-radius: 6px; 
+      font-size: 11px; 
+      font-weight: 600;
+      color: #525252;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    
+    .upload-zone { 
+      border: 2px dashed #d0d0d0; 
+      border-radius: 12px; 
+      padding: 3rem 2rem; 
+      text-align: center; 
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s;
+      background: #f8f9fa;
+    }
+    
+    .upload-zone:hover {
+      border-color: #2d5a3d;
+      background: white;
+    }
+    
+    .upload-zone p { color: #404040; font-size: 14px; font-weight: 500; margin: 8px 0; }
+    .upload-zone .sub { font-size: 13px; color: #737373; font-weight: 400; }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active { display: flex; }
+    
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-header h3 { font-size: 18px; font-weight: 600; color: #1a1a1a; }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #737373;
+      cursor: pointer;
+    }
+    
+    .modal-body { padding: 2rem; }
+    
+    .stat-line {
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+    
+    .stat-line:last-child { border-bottom: none; }
+    
+    .hidden { display: none !important; }
+    
+    .spinner {
+      border: 2px solid #f0f0f0;
+      border-top: 2px solid #2d5a3d;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+    
+    .alert.error {
+      background: #fee;
+      color: #c00;
+      border: 1px solid #fcc;
+    }
+    
+    .alert.success {
+      background: #efe;
+      color: #080;
+      border: 1px solid #cfc;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytoPoPeSM8ZHdGi-mCcEtmw8aHttUDbqGCgak-errEJfFjcL-rnRlrIwalGvfu-yoxTg/exec"; // Remplace par l'URL de ton Apps Script
+    
+    let appState = {
+      view: "login",
+      authenticated: false,
+      mules: [],
+      selectedMule: null,
+      items: [],
+      selectedItem: null
+    };
+    
+    // --- LOGIN ---
+    function renderLogin() {
+      const app = document.getElementById("app");
+      app.innerHTML = `
+        <div class="card">
+          <div class="card-header">
+            <div class="icon-badge">⚔️</div>
+            <h1>D2R Mule Tracker</h1>
+            <p class="subtitle">Gestion de mules</p>
+            <p class="description">Entrez le mot de passe pour accéder au système.</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-input" id="passwordInput" placeholder="Entrez votre mot de passe">
+          </div>
+          <button class="btn-primary" onclick="handleLogin()">Entrer</button>
+        </div>
+      `;
+      document.getElementById("passwordInput").focus();
+    }
+    
+    async function handleLogin() {
+      const password = document.getElementById("passwordInput").value;
+      if (!password) {
+        alert("Veuillez entrer un mot de passe");
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${APPS_SCRIPT_URL}?action=login&password=${encodeURIComponent(password)}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          appState.authenticated = true;
+          appState.view = "dashboard";
+          await loadMules();
+          render();
+        } else {
+          alert("Mot de passe incorrect");
+        }
+      } catch (e) {
+        alert("Erreur de connexion: " + e.message);
+      }
+    }
+    
+    // --- DASHBOARD ---
+    async function loadMules() {
+      try {
+        const response = await fetch(`${APPS_SCRIPT_URL}?action=getMules`);
+        appState.mules = await response.json();
+      } catch (e) {
+        console.error("Erreur chargement mules:", e);
+      }
+    }
+    
+    async function loadItems(muleId) {
+      try {
+        const response = await fetch(`${APPS_SCRIPT_URL}?action=getMuleItems&muleId=${muleId}`);
+        appState.items = await response.json();
+      } catch (e) {
+        console.error("Erreur chargement items:", e);
+      }
+    }
+    
+    function renderDashboard() {
+      const app = document.getElementById("app");
+      let html = `
+        <div class="dashboard">
+          <div class="dashboard-header">
+            <h1 class="dashboard-title">Mes mules</h1>
+            <div class="btn-group">
+              <button class="btn" onclick="appState.view='upload'; render()">
+                📤 Ajouter items
+              </button>
+              <button class="btn" onclick="handleLogout()">
+                🚪
+              </button>
+            </div>
+          </div>
+          
+          <div class="content-card">
+            <div class="mule-grid">
+              ${appState.mules.map(m => `
+                <div class="mule-card ${appState.selectedMule === m.id ? 'active' : ''}" onclick="selectMule('${m.id}')">
+                  <h3>${m.name}</h3>
+                  <p class="count">${m.itemCount || 0} items</p>
+                </div>
+              `).join('')}
+              <div class="mule-card" onclick="createMule()" style="border-style: dashed; display: flex; align-items: center; justify-content: center; opacity: 0.5;">
+                <span style="font-size: 32px;">+</span>
+              </div>
+            </div>
+      `;
+      
+      if (appState.selectedMule) {
+        html += `
+            <input type="text" class="search-input" placeholder="Rechercher un item...">
+            
+            <div class="filters">
+              <div class="filter-chip active">Tous</div>
+              <div class="filter-chip">Unique</div>
+              <div class="filter-chip">Set</div>
+              <div class="filter-chip">Rare</div>
+              <div class="filter-chip">Magic</div>
+            </div>
+            
+            <div class="item-list">
+              ${appState.items.map(item => `
+                <div class="item-card" onclick="selectItem('${item.id}')">
+                  <div class="item-icon ${item.quality}">⚙️</div>
+                  <div class="item-content">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-stats">${item.stats[0] || ''}</div>
+                  </div>
+                  <div class="item-badges">
+                    ${item.ethereal ? '<span class="badge">ETH</span>' : ''}
+                    ${item.sockets > 0 ? `<span class="badge">${item.sockets} OS</span>` : ''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+        `;
+      }
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      app.innerHTML = html;
+    }
+    
+    async function selectMule(muleId) {
+      appState.selectedMule = muleId;
+      await loadItems(muleId);
+      render();
+    }
+    
+    async function createMule() {
+      const name = prompt("Nom de la mule:");
+      if (name) {
+        try {
+          await fetch(`${APPS_SCRIPT_URL}?action=createMule&name=${encodeURIComponent(name)}`);
+          await loadMules();
+          render();
+        } catch (e) {
+          alert("Erreur création mule: " + e.message);
+        }
+      }
+    }
+    
+    function selectItem(itemId) {
+      appState.selectedItem = itemId;
+      render();
+    }
+    
+    // --- UPLOAD ---
+    function renderUpload() {
+      const app = document.getElementById("app");
+      app.innerHTML = `
+        <div class="container">
+          <div class="content-card">
+            <h2 style="margin-bottom: 2rem;">Ajouter des items</h2>
+            
+            <div class="form-group">
+              <label class="form-label">Sélectionner la mule</label>
+              <select class="form-select" id="muleSelect">
+                ${appState.mules.map(m => `<option value="${m.id}">${m.name}</option>`).join('')}
+              </select>
+            </div>
+            
+            <div class="upload-zone" id="uploadZone">
+              <div style="font-size: 32px; margin-bottom: 12px;">📷</div>
+              <p>Cliquer pour uploader des screenshots</p>
+              <p class="sub">ou glisser-déposer vos images</p>
+            </div>
+            
+            <div style="background: #f8f9fa; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;">
+              <p style="font-size: 13px; color: #404040; margin-bottom: 12px;">
+                <strong>💡 Conseils:</strong>
+              </p>
+              <ul style="font-size: 13px; color: #404040; margin-left: 1.25rem;">
+                <li style="margin-bottom: 6px;">Capturez le tooltip complet de l'item</li>
+                <li style="margin-bottom: 6px;">Assurez-vous que le texte est net</li>
+                <li style="margin-bottom: 6px;">Une photo par item</li>
+                <li>Formats: JPG, PNG</li>
+              </ul>
+            </div>
+            
+            <button class="btn btn-primary" onclick="appState.view='dashboard'; render()">
+              ← Retour
+            </button>
+          </div>
+        </div>
+      `;
+      
+      const uploadZone = document.getElementById("uploadZone");
+      uploadZone.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.multiple = true;
+        input.accept = "image/*";
+        input.onchange = (e) => handleFileUpload(e.target.files);
+        input.click();
+      });
+    }
+    
+    async function handleFileUpload(files) {
+      const muleId = document.getElementById("muleSelect").value;
+      
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const base64 = e.target.result.split(",")[1];
+          
+          try {
+            const response = await fetch(`${APPS_SCRIPT_URL}?action=analyzaImage&imageBase64=${encodeURIComponent(base64)}`);
+            const data = await response.json();
+            
+            if (data.success && data.item) {
+              const item = data.item;
+              await fetch(
+                `${APPS_SCRIPT_URL}?action=addItem&muleId=${muleId}&name=${encodeURIComponent(item.name)}&type=${item.type}&quality=${item.quality}&stats=${encodeURIComponent(JSON.stringify(item.stats))}&ethereal=${item.ethereal}&sockets=${item.sockets}`
+              );
+              
+              await loadMules();
+              if (appState.selectedMule === muleId) {
+                await loadItems(muleId);
+              }
+              alert(`Item ajouté: ${item.name}`);
+            } else {
+              alert("Erreur analyse: " + (data.error || "Unknown"));
+            }
+          } catch (e) {
+            alert("Erreur upload: " + e.message);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    
+    // --- MODAL ---
+    function renderItemModal() {
+      if (!appState.selectedItem) return;
+      
+      const item = appState.items.find(i => i.id === appState.selectedItem);
+      if (!item) return;
+      
+      const app = document.getElementById("app");
+      const modal = document.createElement("div");
+      modal.className = "modal active";
+      modal.innerHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>${item.name}</h3>
+            <button class="modal-close" onclick="appState.selectedItem=null; render()">×</button>
+          </div>
+          <div class="modal-body">
+            <div style="margin-bottom: 1.5rem;">
+              <span class="badge" style="display: inline-block; background: #f0f0f0; color: #525252;">${item.quality.toUpperCase()}</span>
+              ${item.ethereal ? '<span class="badge" style="margin-left: 6px;">ETH</span>' : ''}
+              ${item.sockets > 0 ? `<span class="badge" style="margin-left: 6px;">${item.sockets} OS</span>` : ''}
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+              ${item.stats.map(s => `<div class="stat-line"><span>${s}</span></div>`).join('')}
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-primary" style="flex: 1; background: linear-gradient(135deg, #d84040 0%, #a82020 100%);" onclick="deleteItem('${item.id}')">
+                🗑️ Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      app.appendChild(modal);
+    }
+    
+    async function deleteItem(itemId) {
+      if (confirm("Supprimer cet item?")) {
+        try {
+          await fetch(`${APPS_SCRIPT_URL}?action=deleteItem&itemId=${itemId}`);
+          appState.selectedItem = null;
+          if (appState.selectedMule) {
+            await loadItems(appState.selectedMule);
+            await loadMules();
+          }
+          render();
+        } catch (e) {
+          alert("Erreur suppression: " + e.message);
+        }
+      }
+    }
+    
+    function handleLogout() {
+      appState.authenticated = false;
+      appState.view = "login";
+      appState.selectedMule = null;
+      appState.items = [];
+      render();
+    }
+    
+    // --- MAIN RENDER ---
+    function render() {
+      if (!appState.authenticated) {
+        renderLogin();
+      } else if (appState.view === "dashboard") {
+        renderDashboard();
+      } else if (appState.view === "upload") {
+        renderUpload();
+      }
+      
+      if (appState.selectedItem) {
+        renderItemModal();
+      }
+    }
+    
+    // Init
+    render();
+  </script>
+</body>
+</html>
