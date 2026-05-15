@@ -603,7 +603,9 @@
       try {
         const base64 = await fileToBase64(file);
         const mediaType = file.type === "image/png" ? "image/png" : "image/jpeg";
-        const result = await callAPI({ action: "analyzeImage", imageBase64: base64, mediaType });
+        
+        // Use fetch POST for images (base64 too long for JSONP URL)
+        const result = await analyzeImagePost(base64, mediaType);
 
         if (result.success && result.item) {
           const item = result.item;
@@ -650,6 +652,30 @@
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
+  }
+
+  // Use fetch POST for image analysis (base64 too long for JSONP)
+  async function analyzeImagePost(base64, mediaType) {
+    const formData = new FormData();
+    formData.append("action", "analyzeImage");
+    formData.append("imageBase64", base64);
+    formData.append("mediaType", mediaType);
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        redirect: "follow"
+      });
+      const text = await response.text();
+      // Strip JSONP callback if present
+      const json = text.replace(/^[^(]+\(/, "").replace(/\);?\s*$/, "");
+      return JSON.parse(json);
+    } catch (e) {
+      // Fallback: try sending as URL params with truncated base64 won't work
+      // Instead resize image first
+      throw new Error("Erreur envoi image: " + e.message);
+    }
   }
 
   // ==========================================
