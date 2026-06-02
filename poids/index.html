@@ -218,6 +218,41 @@
 
     .hidden { display: none; }
 
+    /* Choice buttons */
+    .choice-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .choice-btn {
+      flex: 1;
+      padding: 24px 16px;
+      background: var(--bg);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .choice-btn svg {
+      display: block;
+      margin: 0 auto 10px;
+      width: 32px;
+      height: 32px;
+    }
+
     /* Results table */
     .table-wrapper {
       overflow-x: auto;
@@ -275,27 +310,12 @@
       color: #ccc;
     }
 
-    .results-table td.high-val {
-      background: #2d6a4f;
-      color: white;
-      font-weight: 500;
-      border-radius: 6px;
-    }
-
-    .results-table td.min-val {
-      background: var(--accent-light);
-      color: var(--accent);
-      font-weight: 500;
-      border-radius: 6px;
-    }
-
     .loading-spinner {
       text-align: center;
       padding: 40px;
       color: var(--muted);
     }
 
-    /* Clickable name */
     .name-link {
       color: var(--accent);
       text-decoration: underline;
@@ -307,7 +327,6 @@
       opacity: 0.7;
     }
 
-    /* Graph stats */
     .graph-stats {
       display: flex;
       gap: 24px;
@@ -338,7 +357,6 @@
       color: var(--text);
     }
 
-    /* Canvas */
     .chart-container {
       width: 100%;
       margin-top: 8px;
@@ -350,7 +368,6 @@
       height: 350px;
     }
 
-    /* Time range buttons */
     .range-buttons {
       display: flex;
       gap: 8px;
@@ -408,8 +425,8 @@
     <div class="message" id="loginMessage"></div>
   </div>
 
-  <!-- WEIGHT FORM -->
-  <div class="card hidden" id="formCard">
+  <!-- CHOICE SCREEN -->
+  <div class="card hidden" id="choiceCard">
     <div class="logo">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 14c-2.7 0-5.1-1.4-6.5-3.5.5-1.7 3.3-2.5 6.5-2.5s6 .8 6.5 2.5C17.1 17.6 14.7 19 12 19z"/>
@@ -418,16 +435,40 @@
 
     <h1>Division Techno</h1>
     <p class="subtitle2">Pesée officielle du mardi</p>
+    <p class="subtitle">Choisissez une catégorie.</p>
+
+    <div class="choice-buttons">
+      <div class="choice-btn" onclick="chooseMode('poids')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 14c-2.7 0-5.1-1.4-6.5-3.5.5-1.7 3.3-2.5 6.5-2.5s6 .8 6.5 2.5C17.1 17.6 14.7 19 12 19z"/></svg>
+        Poids
+      </div>
+      <div class="choice-btn" onclick="chooseMode('force')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>
+        Force de préhension
+      </div>
+    </div>
+  </div>
+
+  <!-- POIDS FORM -->
+  <div class="card hidden" id="poidsFormCard">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 14c-2.7 0-5.1-1.4-6.5-3.5.5-1.7 3.3-2.5 6.5-2.5s6 .8 6.5 2.5C17.1 17.6 14.7 19 12 19z"/>
+      </svg>
+    </div>
+
+    <h1>Division Techno</h1>
+    <p class="subtitle2">Poids</p>
     <p class="subtitle">Entrez votre poids pour la semaine en cours.</p>
 
     <div class="date-badge">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-      Semaine du mardi <span id="dateDisplay"></span>
+      Semaine du mardi <span id="poidsDateDisplay"></span>
     </div>
 
     <div class="field">
       <label>Votre nom</label>
-      <select id="nom">
+      <select id="poidsNom">
         <option value="">— Sélectionnez votre nom —</option>
         <option>Julien Desrochers</option>
         <option>Gilbert Bertrand</option>
@@ -453,37 +494,106 @@
     <div class="field">
       <label>Poids</label>
       <div class="weight-wrapper">
-        <input type="number" id="poids" placeholder="ex: 185.4" step="0.1" min="50" max="500">
+        <input type="number" id="poidsValue" placeholder="ex: 185.4" step="0.1" min="50" max="500">
         <span class="weight-unit">lbs</span>
       </div>
     </div>
 
-    <button id="submitBtn" onclick="soumettre()">Enregistrer mon poids</button>
-    <div class="message" id="message"></div>
+    <button id="poidsSubmitBtn" onclick="soumettreGeneric('poids')">Enregistrer mon poids</button>
+    <div class="message" id="poidsMessage"></div>
 
-    <button class="btn-secondary" onclick="voirResultats()">
+    <button class="btn-secondary" onclick="voirResultatsGeneric('poids')">
       <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
       Voir les résultats
+    </button>
+
+    <button class="btn-secondary" onclick="showChoice()">
+      <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Retour au menu
+    </button>
+  </div>
+
+  <!-- FORCE FORM -->
+  <div class="card hidden" id="forceFormCard">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/>
+      </svg>
+    </div>
+
+    <h1>Division Techno</h1>
+    <p class="subtitle2">Force de préhension</p>
+    <p class="subtitle">Entrez votre résultat pour la semaine en cours.</p>
+
+    <div class="date-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+      Semaine du mardi <span id="forceDateDisplay"></span>
+    </div>
+
+    <div class="field">
+      <label>Votre nom</label>
+      <select id="forceNom">
+        <option value="">— Sélectionnez votre nom —</option>
+        <option>Julien Desrochers</option>
+        <option>Gilbert Bertrand</option>
+        <option>JP Fortin</option>
+        <option>Dany Papillon</option>
+        <option>Étienne Fortier</option>
+        <option>Steve Berberi</option>
+        <option>Maxime Berthelot</option>
+        <option>Gabriel Bragagnolo</option>
+        <option>Yannick Lefebvre</option>
+        <option>Émile Groleau</option>
+        <option>Sabrina Fortin</option>
+        <option>Hubert Trottier</option>
+        <option>Yann Cyr-Landry</option>
+        <option>Maxime Thibodeau</option>
+        <option>William Laroche</option>
+        <option>Alex Michaud-Martel</option>
+        <option>Carl Dion</option>
+        <option>Mathieu Pineault</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Force de préhension</label>
+      <div class="weight-wrapper">
+        <input type="number" id="forceValue" placeholder="ex: 55.2" step="0.1" min="0" max="200">
+        <span class="weight-unit">kg</span>
+      </div>
+    </div>
+
+    <button id="forceSubmitBtn" onclick="soumettreGeneric('force')">Enregistrer mon résultat</button>
+    <div class="message" id="forceMessage"></div>
+
+    <button class="btn-secondary" onclick="voirResultatsGeneric('force')">
+      <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+      Voir les résultats
+    </button>
+
+    <button class="btn-secondary" onclick="showChoice()">
+      <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Retour au menu
     </button>
   </div>
 
   <!-- RESULTS VIEW -->
   <div class="card-wide hidden" id="resultsCard">
-    <div class="logo">
+    <div class="logo" id="resultsLogo">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
       </svg>
     </div>
 
     <h1>Division Techno</h1>
-    <p class="subtitle2">Résultats des 10 dernières semaines</p>
+    <p class="subtitle2" id="resultsSubtitle">Résultats des 10 dernières semaines</p>
     <p class="subtitle">Cliquez sur un nom pour voir sa courbe complète.</p>
 
     <div id="resultsContent">
       <div class="loading-spinner">Chargement des données...</div>
     </div>
 
-    <button class="btn-secondary" onclick="retourFormulaire()">
+    <button class="btn-secondary" id="resultsBackBtn">
       <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       Retour au formulaire
     </button>
@@ -498,7 +608,7 @@
     </div>
 
     <h1 id="graphName"></h1>
-    <p class="subtitle2">Historique complet</p>
+    <p class="subtitle2" id="graphSubtitle">Historique complet</p>
 
     <div class="graph-stats" id="graphStats"></div>
 
@@ -514,15 +624,36 @@
       <canvas id="weightChart"></canvas>
     </div>
 
-    <button class="btn-secondary" onclick="retourResultats()">
+    <button class="btn-secondary" id="graphBackBtn">
       <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       Retour aux résultats
     </button>
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPpRiWdVLhOAKUpFb5XJyobAweQi2dGCaIFC65smvS3LrfXEbO0t7cFhNazctwkib-8g/exec';
+    const POIDS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPpRiWdVLhOAKUpFb5XJyobAweQi2dGCaIFC65smvS3LrfXEbO0t7cFhNazctwkib-8g/exec';
+    const FORCE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmnrP7wIa9noRmabvEu-zZCONnHvGmNb1hdB6D7i_VNoN7GVGdmgZoHKL8N1zStmUNDQ/exec';
+
     let userPassword = '';
+    let currentMode = 'poids'; // 'poids' or 'force'
+    let allPoints = [];
+
+    function getScriptURL() {
+      return currentMode === 'poids' ? POIDS_SCRIPT_URL : FORCE_SCRIPT_URL;
+    }
+
+    function getUnit() {
+      return currentMode === 'poids' ? 'lbs' : 'kg';
+    }
+
+    function getModeLabel() {
+      return currentMode === 'poids' ? 'Poids' : 'Force de préhension';
+    }
+
+    // --- Hide all cards ---
+    function hideAll() {
+      document.querySelectorAll('.card, .card-wide, .card-graph').forEach(c => c.classList.add('hidden'));
+    }
 
     // --- Login ---
     async function login() {
@@ -535,9 +666,8 @@
         return;
       }
 
-      // Verify password server-side by making a test request
       try {
-        const url = new URL(SCRIPT_URL);
+        const url = new URL(POIDS_SCRIPT_URL);
         url.searchParams.set('action', 'results');
         url.searchParams.set('password', password);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
@@ -546,9 +676,8 @@
 
         if (result.success) {
           userPassword = password;
-          document.getElementById('loginCard').classList.add('hidden');
-          document.getElementById('formCard').classList.remove('hidden');
-          msg.style.display = 'none';
+          hideAll();
+          document.getElementById('choiceCard').classList.remove('hidden');
         } else {
           msg.textContent = 'Mot de passe incorrect.';
           msg.className = 'message error';
@@ -563,7 +692,23 @@
       if (e.key === 'Enter') login();
     });
 
-    // --- Get this week's Tuesday ---
+    // --- Choice ---
+    function showChoice() {
+      hideAll();
+      document.getElementById('choiceCard').classList.remove('hidden');
+    }
+
+    function chooseMode(mode) {
+      currentMode = mode;
+      hideAll();
+      if (mode === 'poids') {
+        document.getElementById('poidsFormCard').classList.remove('hidden');
+      } else {
+        document.getElementById('forceFormCard').classList.remove('hidden');
+      }
+    }
+
+    // --- Tuesday logic ---
     function getThisWeeksTuesday() {
       const today = new Date();
       const day = today.getDay();
@@ -585,15 +730,16 @@
       return date.toLocaleDateString('fr-CA', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
-    document.getElementById('dateDisplay').textContent =
-      tuesday.toLocaleDateString('fr-CA', { day: 'numeric', month: 'long', year: 'numeric' });
+    const tuesdayDisplay = tuesday.toLocaleDateString('fr-CA', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('poidsDateDisplay').textContent = tuesdayDisplay;
+    document.getElementById('forceDateDisplay').textContent = tuesdayDisplay;
 
-    // --- Submit ---
-    async function soumettre() {
-      const nom = document.getElementById('nom').value;
-      const poids = document.getElementById('poids').value;
-      const msg = document.getElementById('message');
-      const btn = document.getElementById('submitBtn');
+    // --- Generic Submit ---
+    async function soumettreGeneric(mode) {
+      const nom = document.getElementById(mode + 'Nom').value;
+      const value = document.getElementById(mode + 'Value').value;
+      const msg = document.getElementById(mode + 'Message');
+      const btn = document.getElementById(mode + 'SubmitBtn');
 
       msg.className = 'message';
       msg.innerHTML = '';
@@ -603,8 +749,11 @@
         msg.className = 'message error';
         return;
       }
-      if (!poids || poids < 50 || poids > 500) {
-        msg.textContent = 'Veuillez entrer un poids valide.';
+
+      const minVal = mode === 'poids' ? 50 : 0;
+      const maxVal = mode === 'poids' ? 500 : 200;
+      if (!value || value < minVal || value > maxVal) {
+        msg.textContent = 'Veuillez entrer une valeur valide.';
         msg.className = 'message error';
         return;
       }
@@ -613,11 +762,12 @@
       btn.textContent = 'Envoi en cours...';
 
       const dateStr = formatDateForSheet(tuesday);
+      const scriptURL = mode === 'poids' ? POIDS_SCRIPT_URL : FORCE_SCRIPT_URL;
 
       try {
-        const url = new URL(SCRIPT_URL);
+        const url = new URL(scriptURL);
         url.searchParams.set('nom', nom);
-        url.searchParams.set('poids', parseFloat(poids));
+        url.searchParams.set(mode === 'poids' ? 'poids' : 'force', parseFloat(value));
         url.searchParams.set('date', dateStr);
         url.searchParams.set('password', userPassword);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
@@ -631,10 +781,11 @@
         }
 
         if (result.success) {
-          msg.innerHTML = '<svg style="width:18px;height:18px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="#2d6a4f"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Votre poids a bien été enregistré !';
+          const label = mode === 'poids' ? 'Votre poids a bien été enregistré !' : 'Votre résultat a bien été enregistré !';
+          msg.innerHTML = '<svg style="width:18px;height:18px;vertical-align:middle;margin-right:6px;" viewBox="0 0 24 24" fill="#2d6a4f"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' + label;
           msg.className = 'message success';
-          document.getElementById('nom').value = '';
-          document.getElementById('poids').value = '';
+          document.getElementById(mode + 'Nom').value = '';
+          document.getElementById(mode + 'Value').value = '';
         } else {
           throw new Error(result.error || 'Erreur inconnue');
         }
@@ -644,18 +795,23 @@
       }
 
       btn.disabled = false;
-      btn.textContent = 'Enregistrer mon poids';
+      btn.textContent = mode === 'poids' ? 'Enregistrer mon poids' : 'Enregistrer mon résultat';
     }
 
-    // --- Results ---
-    async function voirResultats() {
-      document.getElementById('formCard').classList.add('hidden');
-      document.getElementById('graphCard').classList.add('hidden');
+    // --- Generic Results ---
+    async function voirResultatsGeneric(mode) {
+      currentMode = mode;
+      hideAll();
       document.getElementById('resultsCard').classList.remove('hidden');
+      document.getElementById('resultsSubtitle').textContent = getModeLabel() + ' — 10 dernières semaines';
       document.getElementById('resultsContent').innerHTML = '<div class="loading-spinner">Chargement des données...</div>';
+      document.getElementById('resultsBackBtn').onclick = function() {
+        hideAll();
+        document.getElementById(mode + 'FormCard').classList.remove('hidden');
+      };
 
       try {
-        const url = new URL(SCRIPT_URL);
+        const url = new URL(getScriptURL());
         url.searchParams.set('action', 'results');
         url.searchParams.set('password', userPassword);
         const response = await fetch(url, { method: 'GET', redirect: 'follow' });
@@ -669,9 +825,10 @@
 
         if (!data.success) throw new Error(data.error || 'Erreur inconnue');
 
+        const unit = getUnit();
         let html = '<div class="table-wrapper"><table class="results-table">';
 
-        html += '<tr><th>Nom</th><th>Max</th><th>Min</th>';
+        html += '<tr><th>Nom</th><th>Min</th><th>Max</th>';
         data.headers.forEach(h => {
           html += '<th>' + h + '</th>';
         });
@@ -680,8 +837,8 @@
         data.results.forEach(person => {
           html += '<tr>';
           html += '<td><span class="name-link" onclick="voirGraphique(\'' + person.nom.replace(/'/g, "\\'") + '\')">' + person.nom + '</span></td>';
-          html += '<td>' + (typeof person.high === 'number' ? person.high : '—') + '</td>';
           html += '<td>' + (typeof person.min === 'number' ? person.min : '—') + '</td>';
+          html += '<td>' + (typeof person.max === 'number' ? person.max : '—') + '</td>';
 
           person.weights.forEach(w => {
             if (w === null) {
@@ -703,23 +860,8 @@
       }
     }
 
-    function retourFormulaire() {
-      document.getElementById('resultsCard').classList.add('hidden');
-      document.getElementById('graphCard').classList.add('hidden');
-      document.getElementById('formCard').classList.remove('hidden');
-    }
-
-    function retourResultats() {
-      document.getElementById('graphCard').classList.add('hidden');
-      document.getElementById('resultsCard').classList.remove('hidden');
-    }
-
     // --- Graph ---
-    let allPoints = [];
-    let currentNom = '';
-
     function setRange(months) {
-      // Update active button
       document.querySelectorAll('.range-btn').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
 
@@ -727,23 +869,17 @@
       if (months > 0) {
         const cutoff = new Date();
         cutoff.setMonth(cutoff.getMonth() - months);
-        filtered = allPoints.filter(p => {
-          // Parse "d MMM yyyy" date string
-          const d = new Date(p.rawDate);
-          return d >= cutoff;
-        });
+        filtered = allPoints.filter(p => p.rawDate >= cutoff);
       }
 
-      if (filtered.length === 0) {
-        filtered = allPoints;
-      }
+      if (filtered.length === 0) filtered = allPoints;
 
-      // Update stats for filtered range
       const weights = filtered.map(p => p.weight);
       const high = Math.max(...weights);
       const low = Math.min(...weights);
       const current = weights[weights.length - 1];
       const change = weights.length >= 2 ? (current - weights[0]).toFixed(1) : '—';
+      const unit = getUnit();
 
       document.getElementById('graphStats').innerHTML =
         '<div class="stat-box"><div class="stat-label">Max</div><div class="stat-value">' + high + '</div></div>' +
@@ -755,19 +891,22 @@
     }
 
     async function voirGraphique(nom) {
-      document.getElementById('resultsCard').classList.add('hidden');
+      hideAll();
       document.getElementById('graphCard').classList.remove('hidden');
       document.getElementById('graphName').textContent = nom;
+      document.getElementById('graphSubtitle').textContent = getModeLabel() + ' — Historique complet';
       document.getElementById('graphStats').innerHTML = '';
       document.getElementById('weightChart').getContext('2d').clearRect(0, 0, 9999, 9999);
-      currentNom = nom;
 
-      // Reset to "Tout" by default
+      document.getElementById('graphBackBtn').onclick = function() {
+        voirResultatsGeneric(currentMode);
+      };
+
       document.querySelectorAll('.range-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelector('.range-btn:last-child').classList.add('active');
 
       try {
-        const url = new URL(SCRIPT_URL);
+        const url = new URL(getScriptURL());
         url.searchParams.set('action', 'history');
         url.searchParams.set('nom', nom);
         url.searchParams.set('password', userPassword);
@@ -782,19 +921,18 @@
 
         if (!data.success) throw new Error(data.error || 'Erreur inconnue');
 
-        // Store all points with raw dates for filtering
         allPoints = data.points.map(p => {
           return { date: p.date, weight: p.weight, rawDate: new Date(p.date) };
         });
 
         const weights = allPoints.map(p => p.weight);
-        const allTimeHigh = typeof data.high === 'number' ? data.high : Math.max(...weights);
+        const allTimeMax = typeof data.max === 'number' ? data.max : Math.max(...weights);
         const allTimeMin = typeof data.min === 'number' ? data.min : Math.min(...weights);
         const current = weights[weights.length - 1];
         const change = weights.length >= 2 ? (current - weights[0]).toFixed(1) : '—';
 
         document.getElementById('graphStats').innerHTML =
-          '<div class="stat-box"><div class="stat-label">Max</div><div class="stat-value">' + allTimeHigh + '</div></div>' +
+          '<div class="stat-box"><div class="stat-label">Max</div><div class="stat-value">' + allTimeMax + '</div></div>' +
           '<div class="stat-box"><div class="stat-label">Min</div><div class="stat-value">' + allTimeMin + '</div></div>' +
           '<div class="stat-box"><div class="stat-label">Actuel</div><div class="stat-value">' + current + '</div></div>' +
           '<div class="stat-box"><div class="stat-label">Variation</div><div class="stat-value">' + (change > 0 ? '+' : '') + change + '</div></div>';
@@ -834,7 +972,6 @@
       function xPos(i) { return pad.left + (i / (points.length - 1)) * chartW; }
       function yPos(w) { return pad.top + chartH - ((w - minW) / rangeW) * chartH; }
 
-      // Grid lines
       ctx.strokeStyle = '#e8e5e0';
       ctx.lineWidth = 1;
       const gridLines = 5;
@@ -852,7 +989,6 @@
         ctx.fillText(Math.round(val * 10) / 10, pad.left - 10, y + 4);
       }
 
-      // Area fill
       ctx.beginPath();
       ctx.moveTo(xPos(0), yPos(weights[0]));
       for (let i = 1; i < points.length; i++) {
@@ -867,7 +1003,6 @@
       ctx.fillStyle = grad;
       ctx.fill();
 
-      // Line
       ctx.beginPath();
       ctx.moveTo(xPos(0), yPos(weights[0]));
       for (let i = 1; i < points.length; i++) {
@@ -878,7 +1013,6 @@
       ctx.lineJoin = 'round';
       ctx.stroke();
 
-      // Dots
       for (let i = 0; i < points.length; i++) {
         ctx.beginPath();
         ctx.arc(xPos(i), yPos(weights[i]), 3.5, 0, Math.PI * 2);
@@ -889,7 +1023,6 @@
         ctx.stroke();
       }
 
-      // X-axis labels (show ~8-10 evenly spaced)
       ctx.fillStyle = '#9ca3af';
       ctx.font = '10px DM Sans, sans-serif';
       ctx.textAlign = 'center';
@@ -901,7 +1034,6 @@
         ctx.fillText(points[i].date, 0, 0);
         ctx.restore();
       }
-      // Always show the last label
       if ((points.length - 1) % labelInterval !== 0) {
         ctx.save();
         ctx.translate(xPos(points.length - 1), pad.top + chartH + 16);
