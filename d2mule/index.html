@@ -163,9 +163,10 @@
 
 <script>
   // ==========================================
-  // CONFIGURATION - Remplace par ton URL Apps Script
+  // CONFIGURATION
   // ==========================================
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytoPoPeSM8ZHdGi-mCcEtmw8aHttUDbqGCgak-errEJfFjcL-rnRlrIwalGvfu-yoxTg/exec";
+  const CLOUDFLARE_WORKER_URL = "https://d2mule-api.jeanphilip-fortin.workers.dev/";
 
   // ==========================================
   // STATE
@@ -656,20 +657,16 @@
 
   async function analyzeImagePost(base64, mediaType) {
     const compressed = await compressImage(base64, mediaType);
-    const params = new URLSearchParams();
-    params.append("action", "analyzeImage");
-    params.append("imageBase64", compressed);
-    params.append("mediaType", "image/jpeg");
-    const response = await fetch(APPS_SCRIPT_URL, {
+    const response = await fetch(CLOUDFLARE_WORKER_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params.toString(),
-      redirect: "follow"
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        imageBase64: compressed,
+        mediaType: "image/jpeg"
+      })
     });
-    const text = await response.text();
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (jsonMatch) return JSON.parse(jsonMatch[0]);
-    throw new Error("Réponse invalide: " + text.substring(0, 200));
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
   }
 
   function compressImage(base64, mediaType) {
