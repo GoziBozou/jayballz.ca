@@ -172,9 +172,9 @@
   // STATE
   // ==========================================
   let state = {
-    view: "login",
+    view: localStorage.getItem("d2mule_auth") === "true" ? "dashboard" : "login",
     mules: [],
-    selectedMule: null,
+    selectedMule: localStorage.getItem("d2mule_selectedMule") || null,
     items: [],
     selectedItem: null,
     filter: "tous",
@@ -265,8 +265,10 @@
     try {
       const data = await callAPI({ action: "login", password });
       if (data.success) {
+        localStorage.setItem("d2mule_auth", "true");
         state.view = "dashboard";
         await loadMules();
+        if (state.selectedMule) await loadItemsForMule(state.selectedMule);
         render();
       } else {
         showAlert(alertDiv, "Mot de passe incorrect", "error");
@@ -368,15 +370,20 @@
     } catch (e) { console.error("Erreur chargement mules:", e); }
   }
 
-  async function selectMule(muleId) {
-    state.selectedMule = muleId;
-    state.filter = "tous";
-    state.search = "";
-    state.selectedItem = null;
+  async function loadItemsForMule(muleId) {
     try {
       const data = await callAPI({ action: "getMuleItems", muleId });
       state.items = Array.isArray(data) ? data : [];
     } catch (e) { state.items = []; }
+  }
+
+  async function selectMule(muleId) {
+    state.selectedMule = muleId;
+    localStorage.setItem("d2mule_selectedMule", muleId);
+    state.filter = "tous";
+    state.search = "";
+    state.selectedItem = null;
+    await loadItemsForMule(muleId);
     render();
   }
 
@@ -405,6 +412,8 @@
   }
 
   function handleLogout() {
+    localStorage.removeItem("d2mule_auth");
+    localStorage.removeItem("d2mule_selectedMule");
     state = { view: "login", mules: [], selectedMule: null, items: [], selectedItem: null, filter: "tous", search: "" };
     render();
   }
@@ -700,7 +709,14 @@
   // ==========================================
   // INIT
   // ==========================================
-  render();
+  async function init() {
+    if (state.view === "dashboard") {
+      await loadMules();
+      if (state.selectedMule) await loadItemsForMule(state.selectedMule);
+    }
+    render();
+  }
+  init();
 </script>
 </body>
 </html>
