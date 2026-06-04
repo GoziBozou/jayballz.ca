@@ -101,7 +101,14 @@
 </head>
 <body>
 
-<div id="loginView" class="container">
+<script>
+  // Show right view immediately to prevent flash
+  if (localStorage.getItem("d2mule_auth") !== "true") {
+    document.documentElement.dataset.initialView = "login";
+  }
+</script>
+
+<div id="loginView" class="container hidden">
   <div class="login-card">
     <div class="icon-badge">⚔️</div>
     <h1>D2R Mule Tracker</h1>
@@ -336,6 +343,7 @@
         if (!name) return;
         try {
           await callAPI({ action: "createMule", name });
+          await new Promise(r => setTimeout(r, 500)); // Wait for Sheets sync
           await loadEverything();
           renderDashboard();
         } catch (e) { alert("Erreur: " + e.message); }
@@ -590,9 +598,12 @@
 
   (async function init() {
     if (localStorage.getItem("d2mule_auth") === "true") {
+      // Show empty dashboard immediately, then load data
+      document.getElementById("dashboardView").classList.remove("hidden");
+      document.getElementById("mainContent").innerHTML = '<div class="empty">Chargement...</div>';
       await loadEverything();
       state.selectedMuleId = localStorage.getItem("d2mule_selected") || null;
-      showDashboard();
+      renderDashboard();
     } else {
       showLogin();
     }
