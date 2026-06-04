@@ -1,689 +1,503 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D2R Mule Tracker</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-      min-height: 100vh;
-    }
-    .container { max-width: 1400px; width: 100%; padding: 2rem; margin: 0 auto; }
-    .card { 
-      background: white; border-radius: 16px; padding: 3rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      max-width: 500px; margin: 4rem auto;
-    }
-    .icon-badge { 
-      width: 56px; height: 56px;
-      background: linear-gradient(135deg, #2d5a3d 0%, #1a3d1a 100%);
-      border-radius: 12px; display: flex; align-items: center;
-      justify-content: center; margin: 0 auto 1.5rem;
-      font-size: 28px; color: white;
-    }
-    h1 { font-size: 32px; font-weight: 600; color: #1a1a1a; margin-bottom: 0.5rem; text-align: center; }
-    .subtitle { font-size: 15px; color: #737373; text-align: center; margin-bottom: 0.25rem; }
-    .description { font-size: 14px; color: #a3a3a3; text-align: center; margin-bottom: 2rem; }
-    .form-group { margin-bottom: 1.5rem; }
-    .form-label { 
-      display: block; font-size: 13px; font-weight: 600; color: #525252;
-      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .form-input, .form-select { 
-      width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0;
-      border-radius: 10px; font-size: 15px; background: #f8f9fa;
-      color: #1a1a1a; transition: all 0.2s; font-family: inherit;
-    }
-    .form-input:focus, .form-select:focus { 
-      outline: none; border-color: #2d5a3d; background: white;
-      box-shadow: 0 0 0 3px rgba(45,90,61,0.1);
-    }
-    .form-input::placeholder { color: #b8b8b8; }
-    .btn-primary { 
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, #2d5a3d 0%, #1a3d1a 100%);
-      color: white; border: none; border-radius: 10px;
-      font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,90,61,0.3); }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .dashboard-header { 
-      background: white; border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04); display: flex;
-      align-items: center; justify-content: space-between;
-    }
-    .dashboard-title { font-size: 28px; font-weight: 600; color: #1a1a1a; }
-    .btn-group { display: flex; gap: 12px; }
-    .btn { 
-      padding: 10px 20px; background: white; border: 1px solid #e0e0e0;
-      border-radius: 8px; font-size: 14px; font-weight: 500; color: #525252;
-      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
-    }
-    .btn:hover { border-color: #2d5a3d; color: #2d5a3d; background: #f0f7f3; }
-    .btn-danger { color: #c00; border-color: #fcc; }
-    .btn-danger:hover { background: #fee; border-color: #c00; color: #c00; }
-    .content-card { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-    .mule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 2rem; }
-    .mule-card { 
-      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-      border: 2px solid #f0f0f0; border-radius: 12px; padding: 1.5rem;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .mule-card:hover { border-color: #2d5a3d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-    .mule-card.active { border-color: #2d5a3d; background: linear-gradient(135deg, #f0f7f3 0%, #e8f3ed 100%); }
-    .mule-card h3 { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
-    .mule-card .count { font-size: 13px; color: #737373; }
-    .mule-card.add-card { border-style: dashed; display: flex; align-items: center; justify-content: center; min-height: 90px; opacity: 0.5; }
-    .mule-card.add-card:hover { opacity: 1; }
-    .search-input { 
-      width: 100%; padding: 14px 20px; border: 1px solid #e0e0e0;
-      border-radius: 12px; font-size: 15px; background: #f8f9fa;
-      margin-bottom: 1.5rem; color: #1a1a1a; font-family: inherit;
-    }
-    .search-input:focus { outline: none; border-color: #2d5a3d; background: white; box-shadow: 0 0 0 3px rgba(45,90,61,0.1); }
-    .search-input::placeholder { color: #b8b8b8; }
-    .filters { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .filter-chip { 
-      padding: 8px 18px; background: #f8f9fa; border: 1px solid #e0e0e0;
-      border-radius: 20px; font-size: 13px; font-weight: 500; color: #525252;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .filter-chip:hover { background: #f0f7f3; border-color: #2d5a3d; color: #2d5a3d; }
-    .filter-chip.active { background: #2d5a3d; border-color: #2d5a3d; color: white; }
-    .item-list { display: flex; flex-direction: column; gap: 10px; }
-    .item-card { 
-      background: white; border: 1px solid #f0f0f0; border-radius: 12px;
-      padding: 14px 18px; display: flex; align-items: center; gap: 14px;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .item-card:hover { border-color: #e0e0e0; transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-    .item-icon { 
-      width: 46px; height: 46px; border-radius: 10px; display: flex;
-      align-items: center; justify-content: center; font-size: 20px;
-      flex-shrink: 0; color: white;
-    }
-    .item-icon.unique { background: linear-gradient(135deg, #4a3320, #3d2817); }
-    .item-icon.set { background: linear-gradient(135deg, #234a23, #1a3d1a); }
-    .item-icon.rare { background: linear-gradient(135deg, #4a4a23, #3d3d1a); }
-    .item-icon.magic { background: linear-gradient(135deg, #23395c, #1a2d4a); }
-    .item-icon.crafted { background: linear-gradient(135deg, #4a2d1d, #3d2417); }
-    .item-icon.normal { background: linear-gradient(135deg, #e8e8e8, #d0d0d0); color: #525252; }
-    .item-icon.runeword { background: linear-gradient(135deg, #4a2d1d, #3d2417); }
-    .item-content { flex: 1; min-width: 0; }
-    .item-name { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-stat { font-size: 13px; color: #737373; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-badges { display: flex; gap: 6px; flex-shrink: 0; }
-    .badge { padding: 4px 10px; background: #f0f0f0; border-radius: 6px; font-size: 11px; font-weight: 600; color: #525252; text-transform: uppercase; }
-    .upload-zone { 
-      border: 2px dashed #d0d0d0; border-radius: 12px; padding: 3rem 2rem;
-      text-align: center; cursor: pointer; margin-bottom: 1.5rem; transition: all 0.2s; background: #f8f9fa;
-    }
-    .upload-zone:hover { border-color: #2d5a3d; background: white; }
-    .upload-zone .icon { font-size: 36px; margin-bottom: 12px; }
-    .upload-zone p { color: #404040; font-size: 14px; font-weight: 500; margin: 4px 0; }
-    .upload-zone .sub { font-size: 13px; color: #737373; font-weight: 400; }
-    .progress-bar { background: #f0f0f0; border-radius: 8px; height: 8px; margin: 1rem 0; overflow: hidden; display: none; }
-    .progress-fill { height: 100%; background: linear-gradient(135deg, #2d5a3d, #1a3d1a); border-radius: 8px; transition: width 0.3s; }
-    .progress-text { font-size: 13px; color: #737373; text-align: center; margin-bottom: 1rem; display: none; }
-    .modal { 
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(2px); z-index: 1000; align-items: center; justify-content: center;
-    }
-    .modal.active { display: flex; }
-    .modal-content { 
-      background: white; border-radius: 16px; max-width: 540px; width: 90%;
-      max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    }
-    .modal-header { 
-      padding: 1.5rem 2rem; border-bottom: 1px solid #e8e8e8;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .modal-header h3 { font-size: 18px; font-weight: 600; color: #1a1a1a; }
-    .modal-close { background: none; border: none; font-size: 24px; color: #737373; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
-    .modal-close:hover { background: #f5f5f5; color: #1a1a1a; }
-    .modal-body { padding: 2rem; }
-    .stat-section-title { font-size: 12px; font-weight: 600; color: #737373; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
-    .stat-line { padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; color: #1a1a1a; }
-    .stat-line:last-child { border-bottom: none; }
-    .alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 1rem; font-size: 14px; }
-    .alert.error { background: #fee; color: #c00; border: 1px solid #fcc; }
-    .alert.success { background: #efe; color: #060; border: 1px solid #cfc; }
-    .alert.info { background: #e8f0fe; color: #1a56db; border: 1px solid #c3d9ff; }
-    .empty-state { text-align: center; padding: 3rem; color: #a3a3a3; font-size: 15px; }
-    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #ffffff44; border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D2R Mule Tracker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; min-height: 100vh; color: #1a1a1a; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+  .hidden { display: none !important; }
+  .login-card { background: white; border-radius: 16px; padding: 3rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); max-width: 460px; margin: 4rem auto; }
+  .icon-badge { width: 56px; height: 56px; background: linear-gradient(135deg, #2d5a3d, #1a3d1a); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 28px; color: white; }
+  .login-card h1 { font-size: 28px; font-weight: 600; text-align: center; margin-bottom: 0.5rem; }
+  .login-card p { text-align: center; color: #737373; font-size: 14px; margin-bottom: 2rem; }
+  .form-input { width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 15px; background: #f8f9fa; font-family: inherit; color: #1a1a1a; }
+  .form-input:focus { outline: none; border-color: #2d5a3d; background: white; box-shadow: 0 0 0 3px rgba(45,90,61,0.1); }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: #525252; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #2d5a3d, #1a3d1a); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,90,61,0.3); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .header { background: white; border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 24px; font-weight: 600; }
+  .btn { padding: 10px 18px; background: white; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-weight: 500; color: #525252; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; }
+  .btn:hover { border-color: #2d5a3d; color: #2d5a3d; background: #f0f7f3; }
+  .btn-danger { color: #c00; border-color: #fcc; }
+  .btn-danger:hover { background: #fee; border-color: #c00; }
+  .btn-group { display: flex; gap: 10px; }
+  .global-search-bar { background: white; border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .search-input { width: 100%; padding: 14px 20px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 15px; background: #f8f9fa; font-family: inherit; color: #1a1a1a; }
+  .search-input:focus { outline: none; border-color: #2d5a3d; background: white; box-shadow: 0 0 0 3px rgba(45,90,61,0.1); }
+  .content-card { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .section-title { font-size: 13px; font-weight: 600; color: #737373; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+  .mule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 2rem; }
+  .mule-card { background: linear-gradient(135deg, #fff, #f8f9fa); border: 2px solid #f0f0f0; border-radius: 12px; padding: 1.25rem; cursor: pointer; position: relative; }
+  .mule-card:hover { border-color: #2d5a3d; }
+  .mule-card.active { border-color: #2d5a3d; background: linear-gradient(135deg, #f0f7f3, #e8f3ed); }
+  .mule-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; padding-right: 24px; }
+  .mule-card .count { font-size: 12px; color: #737373; }
+  .mule-delete { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 6px; background: transparent; border: none; cursor: pointer; color: #a3a3a3; font-size: 18px; opacity: 0; line-height: 1; }
+  .mule-card:hover .mule-delete { opacity: 1; }
+  .mule-delete:hover { background: #fee; color: #c00; }
+  .mule-card.add-card { border-style: dashed; display: flex; align-items: center; justify-content: center; min-height: 80px; color: #a3a3a3; font-size: 28px; }
+  .mule-card.add-card:hover { color: #2d5a3d; border-color: #2d5a3d; }
+  .filters { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .chip { padding: 6px 14px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 13px; font-weight: 500; color: #525252; cursor: pointer; }
+  .chip:hover { background: #f0f7f3; border-color: #2d5a3d; color: #2d5a3d; }
+  .chip.active { background: #2d5a3d; border-color: #2d5a3d; color: white; }
+  .item-list { display: flex; flex-direction: column; gap: 8px; }
+  .item-card { background: white; border: 1px solid #f0f0f0; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; }
+  .item-card:hover { border-color: #d0d0d0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .item-icon { width: 42px; height: 42px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; color: white; }
+  .item-icon.unique { background: linear-gradient(135deg, #6b4226, #4a2e1a); }
+  .item-icon.set { background: linear-gradient(135deg, #2d6b2d, #1a4a1a); }
+  .item-icon.rare { background: linear-gradient(135deg, #b8a020, #8a7818); }
+  .item-icon.magic { background: linear-gradient(135deg, #3a5d8f, #2a4570); }
+  .item-icon.crafted { background: linear-gradient(135deg, #c87830, #a05c1a); }
+  .item-icon.runeword { background: linear-gradient(135deg, #c87830, #a05c1a); }
+  .item-icon.normal { background: #d0d0d0; color: #525252; }
+  .item-info { flex: 1; min-width: 0; }
+  .item-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item-name.unique { color: #6b4226; }
+  .item-name.set { color: #2d6b2d; }
+  .item-name.rare { color: #8a7818; }
+  .item-name.magic { color: #3a5d8f; }
+  .item-name.crafted, .item-name.runeword { color: #c87830; }
+  .item-meta { font-size: 12px; color: #737373; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item-mule-tag { display: inline-block; background: #f0f7f3; color: #2d5a3d; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; }
+  .item-badges { display: flex; gap: 6px; flex-shrink: 0; }
+  .badge { padding: 3px 8px; background: #f0f0f0; border-radius: 4px; font-size: 10px; font-weight: 600; color: #525252; text-transform: uppercase; }
+  .empty { text-align: center; padding: 3rem; color: #a3a3a3; font-size: 14px; }
+  .upload-zone { border: 2px dashed #d0d0d0; border-radius: 12px; padding: 3rem 2rem; text-align: center; cursor: pointer; margin-bottom: 1rem; background: #f8f9fa; }
+  .upload-zone:hover { border-color: #2d5a3d; background: white; }
+  .upload-zone .icon { font-size: 36px; margin-bottom: 12px; }
+  .upload-zone p { color: #404040; font-size: 14px; font-weight: 500; }
+  .upload-zone .sub { font-size: 12px; color: #737373; margin-top: 6px; }
+  .progress { background: #f0f0f0; border-radius: 6px; height: 6px; overflow: hidden; margin: 1rem 0; }
+  .progress-fill { height: 100%; background: linear-gradient(135deg, #2d5a3d, #1a3d1a); transition: width 0.3s; }
+  .progress-text { font-size: 13px; color: #525252; margin-bottom: 0.5rem; text-align: center; }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-content { background: white; border-radius: 16px; max-width: 540px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .modal-header { padding: 1.25rem 1.75rem; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .modal-header h3 { font-size: 18px; font-weight: 600; flex: 1; }
+  .modal-close { background: none; border: none; font-size: 26px; color: #737373; cursor: pointer; padding: 0; width: 32px; height: 32px; line-height: 1; }
+  .modal-close:hover { color: #1a1a1a; }
+  .modal-body { padding: 1.75rem; }
+  .stat-row { padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row.unique { color: #6b4226; }
+  .stat-row.set { color: #2d6b2d; }
+  .stat-row.rare { color: #8a7818; }
+  .stat-row.magic { color: #3a5d8f; }
+  .stat-row.crafted, .stat-row.runeword { color: #c87830; }
+  .alert { padding: 12px 16px; border-radius: 8px; margin: 1rem 0; font-size: 13px; }
+  .alert.error { background: #fee; color: #c00; border: 1px solid #fcc; }
+  .alert.success { background: #efe; color: #060; border: 1px solid #cfc; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff5; border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .result-banner { background: linear-gradient(135deg, #f0f7f3, #e8f3ed); border: 1px solid #2d5a3d33; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #2d5a3d; margin-bottom: 1rem; font-weight: 500; }
+</style>
 </head>
 <body>
-<div id="app"></div>
+
+<div id="loginView" class="container">
+  <div class="login-card">
+    <div class="icon-badge">⚔️</div>
+    <h1>D2R Mule Tracker</h1>
+    <p>Entrez votre mot de passe</p>
+    <label class="form-label">Mot de passe</label>
+    <input type="password" class="form-input" id="passwordInput" placeholder="••••••••">
+    <button class="btn-primary" id="loginBtn">Entrer</button>
+    <div id="loginError"></div>
+  </div>
+</div>
+
+<div id="dashboardView" class="container hidden">
+  <div class="header">
+    <h1>🎒 Mes mules</h1>
+    <div class="btn-group">
+      <button class="btn" id="uploadBtn">📤 Ajouter items</button>
+      <button class="btn btn-danger" id="logoutBtn">🚪</button>
+    </div>
+  </div>
+  <div class="global-search-bar">
+    <input type="text" class="search-input" id="globalSearch" placeholder="🔍 Recherche globale dans toutes les mules...">
+  </div>
+  <div class="content-card" id="mainContent"></div>
+</div>
+
+<div id="uploadView" class="container hidden">
+  <div class="header">
+    <h1>📤 Ajouter des items</h1>
+    <button class="btn" id="backBtn">← Retour</button>
+  </div>
+  <div class="content-card">
+    <label class="form-label">Mule de destination</label>
+    <select class="form-input" id="muleSelect" style="margin-bottom: 1.5rem;"></select>
+    <div class="upload-zone" id="uploadZone">
+      <div class="icon">📷</div>
+      <p>Cliquer pour uploader des screenshots</p>
+      <p class="sub">ou glisser-déposer • JPG, PNG • Plusieurs fichiers acceptés</p>
+    </div>
+    <div id="uploadProgress" class="hidden">
+      <div class="progress-text" id="progressText">Analyse en cours...</div>
+      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div id="uploadAlert"></div>
+    <div style="background: #f8f9fa; border-radius: 10px; padding: 1rem; margin-top: 1rem; font-size: 13px; color: #525252;">
+      <strong style="display: block; margin-bottom: 6px;">💡 Conseils:</strong>
+      • Capture le tooltip complet de l'item<br>
+      • Texte net et lisible<br>
+      • Une photo par item • Plusieurs fichiers en même temps OK
+    </div>
+  </div>
+</div>
+
+<div id="modalContainer"></div>
 
 <script>
-  // ==========================================
-  // CONFIGURATION
-  // ==========================================
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytoPoPeSM8ZHdGi-mCcEtmw8aHttUDbqGCgak-errEJfFjcL-rnRlrIwalGvfu-yoxTg/exec";
   const CLOUDFLARE_WORKER_URL = "https://d2mule-api.jeanphilip-fortin.workers.dev/";
 
-  // ==========================================
-  // STATE
-  // ==========================================
-  let state = {
-    view: localStorage.getItem("d2mule_auth") === "true" ? "dashboard" : "login",
+  const state = {
     mules: [],
-    selectedMule: localStorage.getItem("d2mule_selectedMule") || null,
-    items: [],
-    selectedItem: null,
+    allItems: [],
+    selectedMuleId: null,
     filter: "tous",
     search: ""
   };
 
-  // ==========================================
-  // API - JSONP pour éviter les problèmes CORS
-  // ==========================================
   function callAPI(params) {
     return new Promise((resolve, reject) => {
       const cbName = "cb_" + Math.random().toString(36).substr(2, 9);
       const query = Object.entries({...params, callback: cbName})
         .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
         .join("&");
-      
       const script = document.createElement("script");
       script.src = APPS_SCRIPT_URL + "?" + query;
-
-      const timeout = setTimeout(() => {
-        cleanup();
-        reject(new Error("Timeout - vérifie ton URL Apps Script"));
-      }, 15000);
-
-      window[cbName] = (data) => {
-        cleanup();
-        resolve(data);
-      };
-
+      const timeout = setTimeout(() => { cleanup(); reject(new Error("Timeout")); }, 20000);
+      window[cbName] = (data) => { cleanup(); resolve(data); };
       function cleanup() {
         clearTimeout(timeout);
         delete window[cbName];
         if (script.parentNode) script.parentNode.removeChild(script);
       }
-
-      script.onerror = () => {
-        cleanup();
-        reject(new Error("Erreur réseau - vérifie ton URL Apps Script"));
-      };
-
+      script.onerror = () => { cleanup(); reject(new Error("Erreur réseau")); };
       document.head.appendChild(script);
     });
   }
 
-  // ==========================================
-  // RENDER
-  // ==========================================
-  function render() {
-    const app = document.getElementById("app");
-    if (state.view === "login") app.innerHTML = renderLogin();
-    else if (state.view === "dashboard") app.innerHTML = renderDashboard();
-    else if (state.view === "upload") app.innerHTML = renderUpload();
-    bindEvents();
-    if (state.selectedItem) showItemModal();
-  }
-
-  // ==========================================
-  // LOGIN
-  // ==========================================
-  function renderLogin() {
-    return `
-      <div class="card">
-        <div class="icon-badge">⚔️</div>
-        <h1>D2R Mule Tracker</h1>
-        <p class="subtitle">Gestion de mules</p>
-        <p class="description">Entrez le mot de passe pour accéder au système.</p>
-        <div id="loginAlert"></div>
-        <div class="form-group">
-          <label class="form-label">Mot de passe</label>
-          <input type="password" class="form-input" id="passwordInput" placeholder="Entrez votre mot de passe">
-        </div>
-        <button class="btn-primary" id="loginBtn" onclick="handleLogin()">Entrer</button>
-      </div>
-    `;
-  }
-
-  async function handleLogin() {
-    const input = document.getElementById("passwordInput");
-    const btn = document.getElementById("loginBtn");
-    const alertDiv = document.getElementById("loginAlert");
-    const password = input.value;
-
-    if (!password) { showAlert(alertDiv, "Veuillez entrer un mot de passe", "error"); return; }
-
-    btn.innerHTML = '<span class="spinner"></span>Connexion...';
-    btn.disabled = true;
-
+  async function loadEverything() {
     try {
-      const data = await callAPI({ action: "login", password });
-      if (data.success) {
-        localStorage.setItem("d2mule_auth", "true");
-        state.view = "dashboard";
-        await loadMules();
-        if (state.selectedMule) await loadItemsForMule(state.selectedMule);
-        render();
-      } else {
-        showAlert(alertDiv, "Mot de passe incorrect", "error");
-        btn.innerHTML = "Entrer";
-        btn.disabled = false;
-      }
-    } catch (e) {
-      showAlert(alertDiv, "Erreur: " + e.message, "error");
-      btn.innerHTML = "Entrer";
-      btn.disabled = false;
-    }
+      const mules = await callAPI({ action: "getMules" });
+      state.mules = Array.isArray(mules) ? mules : [];
+      const itemsPromises = state.mules.map(m => 
+        callAPI({ action: "getMuleItems", muleId: m.id })
+          .then(items => Array.isArray(items) ? items.map(i => ({...i, muleName: m.name})) : [])
+          .catch(() => [])
+      );
+      const itemsArrays = await Promise.all(itemsPromises);
+      state.allItems = itemsArrays.flat();
+    } catch (e) { console.error("Load error:", e); }
   }
 
-  // ==========================================
-  // DASHBOARD
-  // ==========================================
+  function showLogin() {
+    document.getElementById("loginView").classList.remove("hidden");
+    document.getElementById("dashboardView").classList.add("hidden");
+    document.getElementById("uploadView").classList.add("hidden");
+  }
+
+  function showDashboard() {
+    document.getElementById("loginView").classList.add("hidden");
+    document.getElementById("dashboardView").classList.remove("hidden");
+    document.getElementById("uploadView").classList.add("hidden");
+    renderDashboard();
+  }
+
+  function showUpload() {
+    document.getElementById("loginView").classList.add("hidden");
+    document.getElementById("dashboardView").classList.add("hidden");
+    document.getElementById("uploadView").classList.remove("hidden");
+    renderUpload();
+  }
+
   function renderDashboard() {
-    const filtered = getFilteredItems();
-    return `
-      <div class="container">
-        <div class="dashboard-header">
-          <h1 class="dashboard-title">Mes mules</h1>
-          <div class="btn-group">
-            ${state.selectedMule ? `<button class="btn" onclick="goUpload()">📤 Ajouter items</button>` : ""}
-            <button class="btn btn-danger" onclick="handleLogout()">🚪</button>
-          </div>
+    const main = document.getElementById("mainContent");
+    const isSearching = state.search.trim().length > 0;
+    
+    let html = `<div class="section-title">Mules (${state.mules.length})</div><div class="mule-grid">`;
+    state.mules.forEach(m => {
+      html += `
+        <div class="mule-card ${state.selectedMuleId === m.id ? 'active' : ''}" data-mule-id="${m.id}">
+          <button class="mule-delete" data-delete-mule="${m.id}" title="Supprimer">×</button>
+          <h3>${escapeHtml(m.name)}</h3>
+          <p class="count">${m.itemCount || 0} items</p>
         </div>
-
-        <div class="content-card">
-          <div class="mule-grid">
-            ${state.mules.map(m => `
-              <div class="mule-card ${state.selectedMule === m.id ? "active" : ""}" onclick="selectMule('${m.id}')">
-                <h3>${m.name}</h3>
-                <p class="count">${m.itemCount || 0} items</p>
+      `;
+    });
+    html += `<div class="mule-card add-card" id="addMuleBtn">+</div></div>`;
+    
+    let itemsToShow = [];
+    let showMuleTag = false;
+    let resultBanner = "";
+    
+    if (isSearching) {
+      itemsToShow = filterItems(state.allItems);
+      showMuleTag = true;
+      resultBanner = `<div class="result-banner">🔍 ${itemsToShow.length} résultat(s) trouvé(s) dans toutes les mules pour "${escapeHtml(state.search)}"</div>`;
+    } else if (state.selectedMuleId) {
+      itemsToShow = filterItems(state.allItems.filter(i => i.muleId === state.selectedMuleId));
+    }
+    
+    if (isSearching || state.selectedMuleId) {
+      html += resultBanner;
+      html += `<div class="filters">`;
+      ["tous", "unique", "set", "rare", "magic", "crafted", "normal", "runeword"].forEach(f => {
+        html += `<div class="chip ${state.filter === f ? 'active' : ''}" data-filter="${f}">${f.charAt(0).toUpperCase() + f.slice(1)}</div>`;
+      });
+      html += `<div class="chip ${state.filter === 'eth' ? 'active' : ''}" data-filter="eth">Ethereal</div>`;
+      html += `<div class="chip ${state.filter === 'socketed' ? 'active' : ''}" data-filter="socketed">Socketé</div>`;
+      html += `</div><div class="item-list">`;
+      
+      if (itemsToShow.length === 0) {
+        html += `<div class="empty">Aucun item trouvé</div>`;
+      } else {
+        itemsToShow.forEach(item => {
+          const stats = Array.isArray(item.stats) ? item.stats : [];
+          html += `
+            <div class="item-card" data-item-id="${item.id}">
+              <div class="item-icon ${item.quality}">${getEmoji(item.type)}</div>
+              <div class="item-info">
+                <div class="item-name ${item.quality}">${escapeHtml(item.name)}${showMuleTag ? `<span class="item-mule-tag">📍 ${escapeHtml(item.muleName)}</span>` : ''}</div>
+                <div class="item-meta">${escapeHtml(item.type || '')} • ${stats.length} propriétés</div>
               </div>
-            `).join("")}
-            <div class="mule-card add-card" onclick="createMule()">
-              <span style="font-size: 36px; color: #a3a3a3;">+</span>
+              <div class="item-badges">
+                ${item.ethereal ? '<span class="badge">ETH</span>' : ''}
+                ${item.sockets > 0 ? `<span class="badge">${item.sockets} OS</span>` : ''}
+              </div>
             </div>
-          </div>
-
-          ${state.selectedMule ? `
-            <input type="text" class="search-input" id="searchInput" placeholder="🔍  Rechercher un item par nom ou stats..." value="${state.search}">
-
-            <div class="filters">
-              ${["tous","unique","set","rare","magic","crafted","normal","runeword"].map(f => `
-                <div class="filter-chip ${state.filter === f ? "active" : ""}" onclick="setFilter('${f}')">${f.charAt(0).toUpperCase() + f.slice(1)}</div>
-              `).join("")}
-              <div class="filter-chip ${state.filter === "eth" ? "active" : ""}" onclick="setFilter('eth')">Ethereal</div>
-              <div class="filter-chip ${state.filter === "socketed" ? "active" : ""}" onclick="setFilter('socketed')">Socketé</div>
-            </div>
-
-            <div class="item-list">
-              ${filtered.length === 0 ? `<div class="empty-state">Aucun item trouvé</div>` :
-                filtered.map(item => `
-                  <div class="item-card" onclick="selectItem('${item.id}')">
-                    <div class="item-icon ${item.quality}">${getItemEmoji(item.type)}</div>
-                    <div class="item-content">
-                      <div class="item-name">${item.name}</div>
-                      <div class="item-stat">${Array.isArray(item.stats) ? item.stats[0] || "" : ""}</div>
-                    </div>
-                    <div class="item-badges">
-                      ${item.ethereal ? '<span class="badge">ETH</span>' : ""}
-                      ${item.sockets > 0 ? `<span class="badge">${item.sockets} OS</span>` : ""}
-                    </div>
-                  </div>
-                `).join("")}
-            </div>
-          ` : `<div class="empty-state">👆 Sélectionne une mule pour voir ses items</div>`}
-        </div>
-      </div>
-    `;
+          `;
+        });
+      }
+      html += `</div>`;
+    } else {
+      html += `<div class="empty">👆 Sélectionne une mule ou utilise la recherche globale</div>`;
+    }
+    
+    main.innerHTML = html;
+    bindDashboardEvents();
   }
 
-  function getFilteredItems() {
-    return state.items.filter(item => {
-      const matchSearch = !state.search ||
-        item.name.toLowerCase().includes(state.search.toLowerCase()) ||
-        (Array.isArray(item.stats) && item.stats.some(s => s.toLowerCase().includes(state.search.toLowerCase())));
-      
-      const matchFilter = state.filter === "tous" ||
-        item.quality === state.filter ||
-        (state.filter === "eth" && item.ethereal) ||
-        (state.filter === "socketed" && item.sockets > 0);
-      
-      return matchSearch && matchFilter;
+  function filterItems(items) {
+    return items.filter(item => {
+      const search = state.search.toLowerCase().trim();
+      if (search) {
+        const inName = item.name && item.name.toLowerCase().includes(search);
+        const inStats = Array.isArray(item.stats) && item.stats.some(s => s.toLowerCase().includes(search));
+        const inType = item.type && item.type.toLowerCase().includes(search);
+        const inMule = item.muleName && item.muleName.toLowerCase().includes(search);
+        if (!inName && !inStats && !inType && !inMule) return false;
+      }
+      if (state.filter === "tous") return true;
+      if (state.filter === "eth") return item.ethereal === true;
+      if (state.filter === "socketed") return item.sockets > 0;
+      return item.quality === state.filter;
     });
   }
 
-  function getItemEmoji(type) {
-    const map = { Helm: "🪖", Ring: "💍", Armor: "🛡️", Weapon: "⚔️", Charm: "💎", Rune: "🔷", Amulet: "📿", Belt: "👑", Boots: "👟", Gloves: "🧤", Shield: "🛡️" };
-    return map[type] || "📦";
+  function bindDashboardEvents() {
+    document.querySelectorAll(".mule-card[data-mule-id]").forEach(card => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("[data-delete-mule]")) return;
+        state.selectedMuleId = card.dataset.muleId;
+        localStorage.setItem("d2mule_selected", card.dataset.muleId);
+        renderDashboard();
+      });
+    });
+    document.querySelectorAll("[data-delete-mule]").forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const muleId = btn.dataset.deleteMule;
+        const mule = state.mules.find(m => m.id === muleId);
+        if (!confirm(`Supprimer la mule "${mule.name}" et tous ses items?`)) return;
+        try {
+          await callAPI({ action: "deleteMule", muleId });
+          if (state.selectedMuleId === muleId) state.selectedMuleId = null;
+          await loadEverything();
+          renderDashboard();
+        } catch (e) { alert("Erreur: " + e.message); }
+      });
+    });
+    const addBtn = document.getElementById("addMuleBtn");
+    if (addBtn) {
+      addBtn.addEventListener("click", async () => {
+        const name = prompt("Nom de la nouvelle mule:");
+        if (!name) return;
+        try {
+          await callAPI({ action: "createMule", name });
+          await loadEverything();
+          renderDashboard();
+        } catch (e) { alert("Erreur: " + e.message); }
+      });
+    }
+    document.querySelectorAll("[data-filter]").forEach(chip => {
+      chip.addEventListener("click", () => { state.filter = chip.dataset.filter; renderDashboard(); });
+    });
+    document.querySelectorAll("[data-item-id]").forEach(card => {
+      card.addEventListener("click", () => showItemModal(card.dataset.itemId));
+    });
   }
 
-  async function loadMules() {
-    try {
-      const data = await callAPI({ action: "getMules" });
-      state.mules = Array.isArray(data) ? data : [];
-    } catch (e) { console.error("Erreur chargement mules:", e); }
-  }
-
-  async function loadItemsForMule(muleId) {
-    try {
-      const data = await callAPI({ action: "getMuleItems", muleId });
-      state.items = Array.isArray(data) ? data : [];
-    } catch (e) { state.items = []; }
-  }
-
-  async function selectMule(muleId) {
-    state.selectedMule = muleId;
-    localStorage.setItem("d2mule_selectedMule", muleId);
-    state.filter = "tous";
-    state.search = "";
-    state.selectedItem = null;
-    await loadItemsForMule(muleId);
-    render();
-  }
-
-  async function createMule() {
-    const name = prompt("Nom de la nouvelle mule:");
-    if (!name) return;
-    try {
-      const data = await callAPI({ action: "createMule", name });
-      if (data.success) { await loadMules(); render(); }
-    } catch (e) { alert("Erreur: " + e.message); }
-  }
-
-  function setFilter(f) {
-    state.filter = f;
-    render();
-  }
-
-  function selectItem(itemId) {
-    state.selectedItem = itemId;
-    render();
-  }
-
-  function goUpload() {
-    state.view = "upload";
-    render();
-  }
-
-  function handleLogout() {
-    localStorage.removeItem("d2mule_auth");
-    localStorage.removeItem("d2mule_selectedMule");
-    state = { view: "login", mules: [], selectedMule: null, items: [], selectedItem: null, filter: "tous", search: "" };
-    render();
-  }
-
-  // ==========================================
-  // UPLOAD
-  // ==========================================
-  function renderUpload() {
-    return `
-      <div class="container">
-        <div class="dashboard-header">
-          <h1 class="dashboard-title">Ajouter des items</h1>
-          <button class="btn" onclick="state.view='dashboard'; render()">← Retour</button>
-        </div>
-        <div class="content-card">
-          <div class="form-group">
-            <label class="form-label">Sélectionner la mule</label>
-            <select class="form-select" id="muleSelect">
-              ${state.mules.map(m => `<option value="${m.id}" ${state.selectedMule === m.id ? "selected" : ""}>${m.name}</option>`).join("")}
-            </select>
-          </div>
-
-          <div id="uploadAlert"></div>
-
-          <div class="progress-text" id="progressText"></div>
-          <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-          </div>
-
-          <div class="upload-zone" id="uploadZone">
-            <div class="icon">📷</div>
-            <p>Cliquer pour uploader des screenshots</p>
-            <p class="sub">ou glisser-déposer • JPG, PNG • Plusieurs fichiers acceptés</p>
-          </div>
-
-          <div style="background: #f8f9fa; border-radius: 12px; padding: 1.25rem;">
-            <p style="font-size: 13px; color: #404040; font-weight: 600; margin-bottom: 10px;">💡 Conseils pour de meilleurs résultats:</p>
-            <ul style="font-size: 13px; color: #525252; margin-left: 1.25rem; line-height: 1.8;">
-              <li>Capture le tooltip complet de l'item (survole l'item en jeu)</li>
-              <li>Assure-toi que le texte est net et lisible</li>
-              <li>Une photo par item pour la meilleure précision</li>
-              <li>Fonctionne avec des screenshots PC ou photos du téléphone</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  // ==========================================
-  // ITEM MODAL
-  // ==========================================
-  function showItemModal() {
-    const item = state.items.find(i => i.id === state.selectedItem);
+  function showItemModal(itemId) {
+    const item = state.allItems.find(i => i.id === itemId);
     if (!item) return;
-
+    const stats = Array.isArray(item.stats) ? item.stats : [];
+    const otherMules = state.mules.filter(m => m.id !== item.muleId);
+    
     const modal = document.createElement("div");
-    modal.className = "modal active";
-    modal.id = "itemModal";
+    modal.className = "modal";
     modal.innerHTML = `
       <div class="modal-content">
         <div class="modal-header">
-          <h3>${item.name}</h3>
-          <button class="modal-close" onclick="closeModal()">×</button>
+          <h3 class="item-name ${item.quality}" style="white-space: normal;">${escapeHtml(item.name)}</h3>
+          <button class="modal-close" id="closeModalBtn">×</button>
         </div>
         <div class="modal-body">
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem;">
-            <span class="badge" style="background: ${getQualityColor(item.quality)}; color: white; padding: 6px 14px; font-size: 12px;">${item.quality?.toUpperCase()}</span>
-            <span class="badge" style="padding: 6px 14px; font-size: 12px;">${item.type}</span>
-            ${item.ethereal ? '<span class="badge" style="padding: 6px 14px; font-size: 12px; background: #525252; color: white;">ÉTHÉRÉEL</span>' : ""}
-            ${item.sockets > 0 ? `<span class="badge" style="padding: 6px 14px; font-size: 12px;">${item.sockets} SOCKET${item.sockets > 1 ? "S" : ""}</span>` : ""}
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem;">
+            <span class="badge" style="background: ${qualityBg(item.quality)}; color: white; padding: 5px 12px; font-size: 11px;">${(item.quality||'').toUpperCase()}</span>
+            <span class="badge" style="padding: 5px 12px; font-size: 11px;">${escapeHtml(item.type || 'Unknown')}</span>
+            ${item.ethereal ? '<span class="badge" style="background: #525252; color: white; padding: 5px 12px; font-size: 11px;">ÉTHÉRÉEL</span>' : ''}
+            ${item.sockets > 0 ? `<span class="badge" style="padding: 5px 12px; font-size: 11px;">${item.sockets} SOCKET${item.sockets > 1 ? 'S' : ''}</span>` : ''}
+            <span class="badge" style="background: #f0f7f3; color: #2d5a3d; padding: 5px 12px; font-size: 11px;">📍 ${escapeHtml(item.muleName || '')}</span>
           </div>
-
-          <div class="stat-section-title">Propriétés</div>
+          <div class="section-title" style="margin-bottom: 0.5rem;">Propriétés</div>
           <div style="margin-bottom: 1.5rem;">
-            ${Array.isArray(item.stats) && item.stats.length > 0
-              ? item.stats.map(s => `<div class="stat-line">${s}</div>`).join("")
-              : '<div class="stat-line" style="color: #a3a3a3;">Aucune stat</div>'}
+            ${stats.length > 0 ? stats.map(s => `<div class="stat-row ${item.quality}">${escapeHtml(s)}</div>`).join('') : '<div class="stat-row" style="color:#a3a3a3;">Aucune stat</div>'}
           </div>
-
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="btn" style="flex: 1;" onclick="moveItemPrompt('${item.id}')">🔀 Déplacer vers...</button>
-            <button class="btn btn-danger" onclick="deleteItem('${item.id}')">🗑️ Supprimer</button>
+          ${otherMules.length > 0 ? `
+            <div class="section-title" style="margin-bottom: 0.5rem;">Déplacer vers une autre mule</div>
+            <select class="form-input" id="moveTargetSelect" style="margin-bottom: 0.75rem;">
+              ${otherMules.map(m => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join('')}
+            </select>
+          ` : ''}
+          <div style="display: flex; gap: 8px;">
+            ${otherMules.length > 0 ? `<button class="btn" id="moveItemBtn" style="flex: 1;">🔀 Déplacer</button>` : ''}
+            <button class="btn btn-danger" id="deleteItemBtn" style="flex: 1;">🗑️ Supprimer</button>
           </div>
         </div>
       </div>
     `;
-    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
-    document.body.appendChild(modal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    document.getElementById("modalContainer").appendChild(modal);
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("deleteItemBtn").addEventListener("click", () => deleteItem(itemId));
+    const moveBtn = document.getElementById("moveItemBtn");
+    if (moveBtn) {
+      moveBtn.addEventListener("click", () => {
+        const target = document.getElementById("moveTargetSelect").value;
+        moveItem(itemId, target);
+      });
+    }
   }
-
-  function getQualityColor(q) {
-    const colors = { unique: "#6b4226", set: "#1a5c1a", rare: "#7a7a00", magic: "#1a3d6b", crafted: "#8b4513", runeword: "#8b4513", normal: "#525252" };
-    return colors[q] || "#525252";
-  }
-
-  function closeModal() {
-    state.selectedItem = null;
-    const modal = document.getElementById("itemModal");
-    if (modal) modal.remove();
-  }
-
+  
+  function closeModal() { document.getElementById("modalContainer").innerHTML = ""; }
+  
   async function deleteItem(itemId) {
-    if (!confirm("Supprimer cet item définitivement?")) return;
+    if (!confirm("Supprimer cet item?")) return;
     try {
-      const data = await callAPI({ action: "deleteItem", itemId });
-      if (data.success) {
-        closeModal();
-        if (state.selectedMule) {
-          const d = await callAPI({ action: "getMuleItems", muleId: state.selectedMule });
-          state.items = Array.isArray(d) ? d : [];
-          await loadMules();
-        }
-        render();
-      }
-    } catch (e) { alert("Erreur: " + e.message); }
-  }
-
-  async function moveItemPrompt(itemId) {
-    const otherMules = state.mules.filter(m => m.id !== state.selectedMule);
-    if (otherMules.length === 0) { alert("Tu n'as pas d'autres mules!"); return; }
-    
-    const options = otherMules.map((m, i) => `${i + 1}. ${m.name}`).join("\n");
-    const choice = prompt(`Déplacer vers quelle mule?\n\n${options}\n\nEntre le numéro:`);
-    
-    if (!choice) return;
-    const idx = parseInt(choice) - 1;
-    if (idx < 0 || idx >= otherMules.length) { alert("Choix invalide"); return; }
-    
-    const targetMule = otherMules[idx];
-    const item = state.items.find(i => i.id === itemId);
-    
-    try {
-      await callAPI({ action: "addItem", muleId: targetMule.id, name: item.name, type: item.type, quality: item.quality, stats: JSON.stringify(item.stats), ethereal: item.ethereal, sockets: item.sockets });
       await callAPI({ action: "deleteItem", itemId });
       closeModal();
-      const d = await callAPI({ action: "getMuleItems", muleId: state.selectedMule });
-      state.items = Array.isArray(d) ? d : [];
-      await loadMules();
-      render();
-      alert(`Item déplacé vers ${targetMule.name}!`);
+      await loadEverything();
+      renderDashboard();
+    } catch (e) { alert("Erreur: " + e.message); }
+  }
+  
+  async function moveItem(itemId, targetMuleId) {
+    const item = state.allItems.find(i => i.id === itemId);
+    if (!item) return;
+    try {
+      await callAPI({ action: "addItem", muleId: targetMuleId, name: item.name, type: item.type, quality: item.quality, stats: JSON.stringify(item.stats), ethereal: item.ethereal, sockets: item.sockets });
+      await callAPI({ action: "deleteItem", itemId });
+      closeModal();
+      await loadEverything();
+      renderDashboard();
     } catch (e) { alert("Erreur: " + e.message); }
   }
 
-  // ==========================================
-  // FILE UPLOAD & ANALYSIS
-  // ==========================================
-  function bindEvents() {
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => { state.search = e.target.value; render(); });
-    }
-
-    const uploadZone = document.getElementById("uploadZone");
-    if (uploadZone) {
-      uploadZone.addEventListener("click", () => {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.multiple = true;
-        input.accept = "image/*";
-        input.onchange = (e) => handleFiles(e.target.files);
-        input.click();
-      });
-
-      uploadZone.addEventListener("dragover", (e) => { e.preventDefault(); uploadZone.style.borderColor = "#2d5a3d"; });
-      uploadZone.addEventListener("dragleave", () => { uploadZone.style.borderColor = "#d0d0d0"; });
-      uploadZone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        uploadZone.style.borderColor = "#d0d0d0";
-        handleFiles(e.dataTransfer.files);
-      });
-    }
-
-    const passwordInput = document.getElementById("passwordInput");
-    if (passwordInput) {
-      passwordInput.addEventListener("keypress", (e) => { if (e.key === "Enter") handleLogin(); });
-    }
+  function renderUpload() {
+    const select = document.getElementById("muleSelect");
+    select.innerHTML = state.mules.map(m => 
+      `<option value="${m.id}" ${state.selectedMuleId === m.id ? 'selected' : ''}>${escapeHtml(m.name)}</option>`
+    ).join('');
   }
-
+  
   async function handleFiles(files) {
     const muleId = document.getElementById("muleSelect").value;
-    const alertDiv = document.getElementById("uploadAlert");
-    const progressBar = document.getElementById("progressBar");
-    const progressFill = document.getElementById("progressFill");
+    if (!muleId) { alert("Sélectionne une mule"); return; }
+    const progressDiv = document.getElementById("uploadProgress");
     const progressText = document.getElementById("progressText");
-    const total = files.length;
-    let done = 0;
-    let errors = 0;
-
-    progressBar.style.display = "block";
-    progressText.style.display = "block";
-
-    for (const file of files) {
-      progressText.textContent = `Analyse ${done + 1} / ${total} - ${file.name}`;
-      progressFill.style.width = `${(done / total) * 100}%`;
-
+    const progressFill = document.getElementById("progressFill");
+    const alertDiv = document.getElementById("uploadAlert");
+    progressDiv.classList.remove("hidden");
+    alertDiv.innerHTML = "";
+    let success = 0, errors = 0;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      progressText.textContent = `Analyse ${i+1}/${files.length} - ${file.name}`;
+      progressFill.style.width = `${(i/files.length)*100}%`;
       try {
         const base64 = await fileToBase64(file);
-        const mediaType = file.type === "image/png" ? "image/png" : "image/jpeg";
-        
-        // Use fetch POST for images (base64 too long for JSONP URL)
-        const result = await analyzeImagePost(base64, mediaType);
-
+        const compressed = await compressImage(base64, file.type);
+        const response = await fetch(CLOUDFLARE_WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imageBase64: compressed, mediaType: "image/jpeg" })
+        });
+        const result = await response.json();
         if (result.success && result.item) {
-          const item = result.item;
+          const it = result.item;
           await callAPI({
-            action: "addItem",
-            muleId,
-            name: item.name,
-            type: item.type || "Unknown",
-            quality: item.quality || "normal",
-            stats: JSON.stringify(item.stats || []),
-            ethereal: item.ethereal || false,
-            sockets: item.sockets || 0
+            action: "addItem", muleId,
+            name: it.name || "Unknown",
+            type: it.type || "Unknown",
+            quality: it.quality || "normal",
+            stats: JSON.stringify(it.stats || []),
+            ethereal: it.ethereal || false,
+            sockets: it.sockets || 0
           });
-        } else {
-          errors++;
-          console.error("Erreur analyse:", result.error);
-        }
-      } catch (e) {
-        errors++;
-        console.error("Erreur fichier:", e);
-      }
-
-      done++;
-      progressFill.style.width = `${(done / total) * 100}%`;
+          success++;
+        } else { errors++; console.error("Analysis failed:", result); }
+      } catch (e) { errors++; console.error("Upload error:", e); }
     }
-
-    progressText.textContent = `✅ Terminé! ${done - errors} items ajoutés, ${errors} erreurs.`;
     progressFill.style.width = "100%";
-
-    await loadMules();
-    showAlert(alertDiv, `${done - errors} item(s) analysé(s) et ajouté(s) avec succès!`, "success");
-
+    progressText.textContent = `✅ Terminé! ${success} ajouté(s), ${errors} erreur(s)`;
+    await loadEverything();
+    alertDiv.innerHTML = `<div class="alert success">${success} item(s) ajouté(s)! ${errors > 0 ? `(${errors} erreurs)` : ''}</div>`;
     setTimeout(() => {
-      state.view = "dashboard";
-      if (state.selectedMule) selectMule(state.selectedMule);
-      else render();
-    }, 2000);
+      progressDiv.classList.add("hidden");
+      progressFill.style.width = "0%";
+      state.selectedMuleId = muleId;
+      localStorage.setItem("d2mule_selected", muleId);
+      showDashboard();
+    }, 1500);
   }
-
+  
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result.split(",")[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+      const r = new FileReader();
+      r.onload = e => resolve(e.target.result.split(",")[1]);
+      r.onerror = reject;
+      r.readAsDataURL(file);
     });
   }
-
-  async function analyzeImagePost(base64, mediaType) {
-    const compressed = await compressImage(base64, mediaType);
-    const response = await fetch(CLOUDFLARE_WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        imageBase64: compressed,
-        mediaType: "image/jpeg"
-      })
-    });
-    if (!response.ok) throw new Error("HTTP " + response.status);
-    return await response.json();
-  }
-
+  
   function compressImage(base64, mediaType) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const MAX = 800;
+        const MAX = 1000;
         let w = img.width, h = img.height;
         if (w > MAX || h > MAX) {
           if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -691,32 +505,99 @@
         }
         canvas.width = w; canvas.height = h;
         canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL("image/jpeg", 0.6).split(",")[1]);
+        resolve(canvas.toDataURL("image/jpeg", 0.7).split(",")[1]);
       };
       img.src = "data:" + mediaType + ";base64," + base64;
     });
   }
 
-  // ==========================================
-  // UTILS
-  // ==========================================
-  function showAlert(div, message, type) {
-    if (!div) return;
-    div.innerHTML = `<div class="alert ${type}">${message}</div>`;
-    setTimeout(() => { div.innerHTML = ""; }, 4000);
+  function escapeHtml(s) {
+    if (s == null) return "";
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  
+  function getEmoji(type) {
+    const m = { Helm: "🪖", Ring: "💍", Armor: "🛡️", Weapon: "⚔️", Charm: "💎", Rune: "🔷", Amulet: "📿", Belt: "👑", Boots: "👟", Gloves: "🧤", Shield: "🛡️" };
+    return m[type] || "📦";
+  }
+  
+  function qualityBg(q) {
+    const c = { unique: "#6b4226", set: "#2d6b2d", rare: "#8a7818", magic: "#3a5d8f", crafted: "#c87830", runeword: "#c87830", normal: "#525252" };
+    return c[q] || "#525252";
   }
 
-  // ==========================================
-  // INIT
-  // ==========================================
-  async function init() {
-    if (state.view === "dashboard") {
-      await loadMules();
-      if (state.selectedMule) await loadItemsForMule(state.selectedMule);
+  document.getElementById("loginBtn").addEventListener("click", handleLogin);
+  document.getElementById("passwordInput").addEventListener("keypress", e => { if (e.key === "Enter") handleLogin(); });
+  document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+  document.getElementById("uploadBtn").addEventListener("click", showUpload);
+  document.getElementById("backBtn").addEventListener("click", showDashboard);
+  
+  // KEY FIX: The search input is bound ONCE and NEVER re-rendered
+  // This prevents focus loss while typing
+  document.getElementById("globalSearch").addEventListener("input", (e) => {
+    state.search = e.target.value;
+    renderDashboard();
+  });
+  
+  const uploadZone = document.getElementById("uploadZone");
+  uploadZone.addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.multiple = true;
+    input.accept = "image/*";
+    input.onchange = e => handleFiles(e.target.files);
+    input.click();
+  });
+  uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.style.borderColor = "#2d5a3d"; });
+  uploadZone.addEventListener("dragleave", () => { uploadZone.style.borderColor = "#d0d0d0"; });
+  uploadZone.addEventListener("drop", e => {
+    e.preventDefault();
+    uploadZone.style.borderColor = "#d0d0d0";
+    handleFiles(e.dataTransfer.files);
+  });
+
+  async function handleLogin() {
+    const btn = document.getElementById("loginBtn");
+    const input = document.getElementById("passwordInput");
+    const err = document.getElementById("loginError");
+    if (!input.value) return;
+    btn.innerHTML = '<span class="spinner"></span>Connexion...';
+    btn.disabled = true;
+    try {
+      const data = await callAPI({ action: "login", password: input.value });
+      if (data.success) {
+        localStorage.setItem("d2mule_auth", "true");
+        await loadEverything();
+        state.selectedMuleId = localStorage.getItem("d2mule_selected") || null;
+        showDashboard();
+      } else {
+        err.innerHTML = '<div class="alert error">Mot de passe incorrect</div>';
+        btn.innerHTML = "Entrer"; btn.disabled = false;
+      }
+    } catch (e) {
+      err.innerHTML = `<div class="alert error">Erreur: ${e.message}</div>`;
+      btn.innerHTML = "Entrer"; btn.disabled = false;
     }
-    render();
   }
-  init();
+  
+  function handleLogout() {
+    localStorage.removeItem("d2mule_auth");
+    localStorage.removeItem("d2mule_selected");
+    state.mules = []; state.allItems = []; state.selectedMuleId = null; state.search = "";
+    document.getElementById("globalSearch").value = "";
+    showLogin();
+  }
+
+  (async function init() {
+    if (localStorage.getItem("d2mule_auth") === "true") {
+      await loadEverything();
+      state.selectedMuleId = localStorage.getItem("d2mule_selected") || null;
+      showDashboard();
+    } else {
+      showLogin();
+    }
+  })();
 </script>
+
 </body>
 </html>
